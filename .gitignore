@@ -1,0 +1,6 @@
+*.tos
+*.st
+*.html
+*.pdf
+*.zip
+build/

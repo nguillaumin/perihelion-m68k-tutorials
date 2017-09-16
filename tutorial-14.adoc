@@ -1,0 +1,211 @@
+Of Using The Gramophone
+=======================
+perihelion of poSTmortem
+2003-02-22 (last edition of the initial revision)
+
+[quote, Braveheart]
+They fought like warrior poets. They fought like Scotsmen and
+won their freedom forever.
+
+Wow, it really was a long time since the last tutorial. I've had more and more to do in school
+and other things have popped up, maybe I just needed a break too. Now I really feel up to
+writing again, thanks to some encouragement on the Atari forum (http://www.atari-forum.com/).
+
+This here tutorial will be the follow up of the previous one, in which I promised to tell you
+how to play the `.ym` files of the ST-sound format from Arnaud Carré. It will be quite easy and
+a bit of a soft start actually. The focus lies not so much on the code, but how to find and
+apply knowledge.
+
+Like I always say, I am no musician, neither am I an artist, so therefore, I need to rip stuff or
+have it made for me. I have loads of `.ym` files on my PC, which can be played by using a
+plug-in for Winamp. Wouldn't it be nice to be able to use this wealth of music? Yes it would, I
+wonder how that can be achieved, here's how.
+
+In order to use the files, we need information on the file format. See <<tutorial-06#,tutorial 6>>
+for a quick refresh on files if that's needed. Load up a good search engine in the browser,
+I used Google (http://www.google.com/). Now we want to find info on the `.ym` file format,
+so a search string of "ym file format" would seem appropriate. Would you look at that, the
+first find seems good, taking us to http://leonard.oxg.free.fr/ymformat.html. Quickly browsing
+the side, we judge it seems to hold what we need. We also discover the file format is freeware,
+so there's no need to worry about the cops.
+Hum hum, there seem to be different versions of the file format, didn't know that... hum
+hum, this information only applies to YM6, the latest version. "So YM6 is just a register dump
+file", this is an important key, it tells us how the file format works. It seems that an `.ym` file is
+simply a dump of the data used to play a song, but that's not enough, we need to know how
+the data is organized. Reading on... Ah, `.ym` files are packed using LHA, so that's why they
+are so small. Using the freeware UltimateZip (http://www.ultimatezip.com/), an `.ym` file can
+be unpacked, or any other LHA packer, but UltimateZip is my choice of program.
+
+Reading ever further down the page... ah, here it comes. The `.ym` file contains 16 bytes of
+data for each frame, interleaved. Sure, the sound chip has 16 registers, so by just putting the
+data into the registers of the sound chip, music should be played. Lastly, there's some info on
+the file header. Some files have headers that tell of important information for the rest of the
+file, here for example, it's nice to know how long a song actually is. There's some talk about
+digi-drums and so, that will not be covered in this tutorial and you are welcome to explore it
+yourself.
+
+So, now we have all the information we need, we just have to structure it and go through it.
+Load up the included `.ym` file `jamblv1.ym` in your favourite hex-editor. It's also possible to
+put it in an otherwise empty source file, assemble it and go into the debugger like this
+
+[source]
+----
+                nop
+incbin          jamblv1.ym
+----
+
+.Hex dump of the beginning of `jamblv1.ym`
+----
+00000000  59 4d 36 21 4c 65 4f 6e  41 72 44 21 00 00 0b ea  |YM6!LeOnArD!....|
+00000010  00 00 00 00 00 00 00 1e  84 80 00 32 00 00 00 00  |...........2....|
+00000020  00 00 37 20 47 61 74 65  73 20 6f 66 20 4a 61 6d  |..7 Gates of Jam|
+00000030  62 61 6c 61 20 4c 65 76  65 6c 20 31 00 4a 6f 63  |bala Level 1.Joc|
+00000040  68 65 6e 20 48 69 70 70  65 6c 00 43 6f 6e 76 65  |hen Hippel.Conve|
+00000050  72 74 65 64 20 62 79 20  4c 65 6f 6e 61 72 64 00  |rted by Leonard.|
+00000060  ed ec ec ed ee ef f0 ef  ee ed ec ec ed ee ef f0  |................|
+00000070  ef ee ed ec ec ed ee ef  f0 ef ee ed ec ec ed ee  |................|
+00000080  ef f0 ef ee ed ec ec ed  ee ef f0 ef ee ed ec ec  |................|
+00000090  ed ee ef f0 ef ee ed ec  ec ed ee ef f0 ef ee ed  |................|
+----
+
+It seems that every program starts with two bytes of data that would overwrite the data in
+`jamblv1.ym`, that's what the NOP is there for. By hitting tab once to get into the memory
+window, you can use the arrow keys to scroll up and down in the `jamblv1.ym` file. Now we'll
+traverse the file and see if it corresponds to the information we have on what the file should
+look like. It starts with the values `$59`, `$4d` and `$21`, which identifies the file as an YM6 file.
+When interpreted as ASCII (numbers to letters), these numbers become the letters Y, M and
+!. Next follows a test string, "LeOnArD!", all good so far.
+
+After the initial check-things comes the interesting information, a long (4 bytes) that tells us
+the number of frames in the file. In this case, it's a value of `$0000bea`, which corresponds to
+3050 in decimal. Note that I wrote out the leading two bytes that for now only contain zeros,
+but they are important to count otherwise you'll get lost. What does this mean exactly? Well,
+frame of music is just like a frame of graphics, the ST usually operates at 50 Hertz which
+equals 50 frames per second. So we divide 3050 by 50 and get the value 61, indicating the
+tune should be 1:01 long. Load it up in Winamp to test, yep, seems to be right.
+
+Next comes four bytes of song attributes, that I have no idea what it is, but zero seems to be
+a safe value, and two bytes of digi-drums, which are also zero. Some files have a song
+attribute of one, and they seem to work fine to. You'll have to experiment with this yourself if
+you find songs that should use digi-drums, or mail LeOnArD! Another uninteresting value,
+`$001e8480`, or 2000000, which seems to indicate this is indeed an Atari tune. Then two
+bytes, telling us the tune is operating at a frequency of 50 Hz. Lastly an additional six bytes
+of zero data.
+
+Right, you with me so far? It's just a question of slowly going through the file and check that
+everything is in order and corresponds to the information we have. Of course it is in order,
+otherwise the file wouldn't work in Winamp, but I want to make sure for myself. Now comes
+some text again, according to Leonard's page, these are the song name, author name and
+song comment.
+
+The data is in null terminated string format. This means the strings can be variable in length,
+and ends with the value zero. Quite true, after each little string, we can see zeroes shining
+through. After these strings, the real sound data begins, also of unknown length. However,
+since we know that there are 3050 frames of data, and each frame holds 16 bytes of sound
+data, there are 3050 × 16 = 48800 bytes of data here, this calculation also seems correct
+since this is roughly the file size. At the end, there are also four bytes forming the string
+"End!".
+
+.Hex dump of the end of `jamblv1.ym`
+----
+0000be80  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000be90  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bea0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000beb0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bec0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bed0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bee0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bef0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+0000bf00  45 6e 64 21                                       |End!|
+0000bf04
+----
+
+So what do we really need here? Two things, the number of frames, to know how long the
+music file is, so we know when to terminate play, or loop the song, and the start address of
+the music data. We know the address of the number of frames, so that's easy to just store in
+a variable. Getting to the music data is trickier, since we don't know exactly where it is. Sure,
+we can hexedit the file and then hardcode the address into the program, but a more general
+way of finding the music start data would be nice, so that we easily can play many different
+`.ym` files without having to check the start address of the sound data for each file.
+
+What we want is to get to the end of the three text strings, because this is where the sound
+data begins (if you don't have any digi-drums). To do this, we put ourselves at the beginning
+of the text field, which always start at the same place, and then we check each byte for a
+zero, since this means the end of a string, and do this three times. In so doing, we will have
+passed by all the three text strings, like so
+
+[source]
+----
+                move.l  #ym_file, a0              ; start of ym file
+                move.l  12(a0), frames            ; store number of frames
+                add.l   #34, a0                   ; beginning of text
+
+song_name
+                cmp.b   #0, (a0)+                 ; search for 0
+                bne     song_name
+comment
+                cmp.b   #0, (a0)+                 ; search for 0
+                bne     comment
+song_data
+                cmp.b   #0, (a0)+                 ; search for 0
+                bne     song_data
+                move.l  a0, music                 ; skipped 3 zero, store address
+----
+
+Now we have the length of the tune in frames, and the start address for the sound data in
+music. What was that about interleaved data? The thing is, that many registers of the sound
+chip are all zero. In order to compress better, it would be nice to have all these zeros in one
+long row. Therefore, the data is not presented in the order it's supposed to be inserted in the
+sound chip, rather, the data is presented one full register after another. Thus, in our file,
+there is 3050 bytes of register 0 data, then 3050 bytes of register 1 data and so on.
+
+When we put the sound data in the yammy, we have to add the number of frames for each
+input. In this way, we will first input data from register 0, and then we skip the number of
+frames to reach the data for the next register and so on. Here's the entire code, the code for
+the VU bars has already been discussed and is only included here for fun, so there is very
+little new code
+
+[source]
+----
+include::src/tut14.s[]
+----
+
+I start off with a normal setup, then read in the music data as described previously and start
+the main routine. The main routine here has the actual routine for playing the tune, and the
+rest of the code is just VU bars.
+
+First, make `a0` point to the current music data, this is somewhere in the music file (on a
+number of frames boundary), then put the yammy register number in `d0`. The real routine for
+actually getting the sound data into the yammy is very compact. `d0` holds the number of the
+register to manipulate, putting that in `$ff8800` lets us manipulate the register in question,
+then I just put in the music data. After that, it's a question of adding the number of frames to
+the music pointer, in order to point to the next register. Increment `d0` to point to the next
+register, and do this 16 times, one time for each register. If you don't remember about the
+sound chip, recheck <<tutorial-13#,tutorial 13>>.
+
+Next I increment the music pointer, so that it points to the beginning of the next sound data
+set, and increase the number of played frames by one. The last part of the main routine
+checks to see if the number of played frames equals the number of frames, if this is so, I
+subtract the number of frames from the music pointer. This makes the music pointer point to
+the beginning of the music data again. The play time also needs to be reset of course, finally,
+a jump to the VU routine, just for the visual effect. Not to complex when you think about it,
+actually, I managed to get it right on the first compile... almost, I had a slight offset error.
+
+The routine should work for any and all YM6 version files without anything fancy (digi-drums
+etc), and perhaps even with some fancy stuff. I don't really know. Unfortunately it will not
+play any other ym versions, you'll have to work that out yourself. In order to get any music
+you want from any Atari source, you can use SainT to record the music in `.ym` format, it's
+that simple.
+
+With this routine, you could make yourself an `.ym` file player for the Atari. As the program is
+now, it's really crappy, there is no error reporting of any kind for starters. Perhaps some
+tunes really are in 60 Hertz, then they would play wrongly, or perhaps the file is something
+other than YM6 probably resulting in a crash. You should add some error reporting yourself.
+
+One nice thing to do with this is to just hook up the music to the VBL, then drop out of the
+program (not waiting for a key press nor restoring the VBL). The music will still be playing
+and you can go on coding. This is very unstable though, and doing this in the GEM desktop
+will probably get you an immediate crash, doing this in Devpac will probably get you a crash
+when you compile anything. It's just an idea to get you going.
+
+

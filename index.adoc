@@ -1,0 +1,55 @@
+The Atari ST MC68000 Assembly Language Tutorials
+================================================
+perihelion of poSTmortem
+1st edition (v0.84), August 28th 2004 | edited by bp
+
+== Foreword
+
+This document is a compilation and formatting of a set of tutorials created by perihelion with
+the intention to start people in the "art and science" of coding the Atari ST series of
+computers in assembly, one of the more popular programming languages especially for
+games, demos and other hardware-intensive applications. He welcomes any and all feedback
+at <andreaswahlin@bredband.net>.
+
+
+For the sake of convenience, some very useful texts were added as appendixes, and due
+credit was given where possible. There are still some authors lacking for a few, so please, if
+you know who has written any of the un-credited appendixes, send an e-mail to
+<bruno@atari.st>.
+
+
+While many people contributed with comments, suggestions, criticism and general incentive,
+some have been of special help, so perihelion would like to thank:
+
+* Lars Lindblad, for suggesting it in the first place.
+* Bruno Padinha (bp, http://stgameslist.atari.org) for critique and assistance extraordinaire.
+* Marten Maartens (ST Graveyard, http://www.atarilegend.com/) for nice words and providing me with a canvas.
+* Torsten Keltsch (mOdmate/Checkpoint, http://membres.lycos.fr/abrobecker/STart/mOd/mOd.html), for support in my early times.
+
+== Table of Contents
+
+1. <<tutorial-01#,On The Theory Behind Programming>>
+2. <<tutorial-02#,Of The Workings Of Devpac 3 And The Realisation Of Some Code>>
+3. <<tutorial-03#,Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps>>
+4. <<tutorial-04#,Of The Ways Of Addressing Memory>>
+5. <<tutorial-05#,Of The Workings Of The Graphics Memory And Minor Skills In Branching>>
+6. <<tutorial-06#,Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files>>
+7. <<tutorial-07#,On Scrollers>>
+8. <<tutorial-08#,Of Scrolling 8 Pixels Per VBL Using Double Buffer>>
+9. <<tutorial-09#,Of Revealing The Unseen And Expanding Our Consciousness Without The Use Of Illegal Drugs>>
+10. <<tutorial-10#,Of Lighting A Candle (And Casting A Shadow)>>
+11. <<tutorial-11#,Of Making The Mountain Move To Mohammed>>
+12. <<tutorial-12#,Of Controlling The Puppets>>
+13. <<tutorial-13#,Of Hearing That Which Is Spoken>>
+14. <<tutorial-14#,Of Using The Gramophone>>
+15. <<tutorial-15#,On Fading To Black>>
+
+== Appendixes
+
+* link:appendixes/m68k-instruction-set.txt[Motorola 68000 Instruction Set]
+* link:appendixes/hardware-register-listing.txt[Hardware Register Listing (Dan Hollis)]
+* link:appendixes/ascii-table.txt[ASCII Table (Stephen McNabb)]
+* link:src/initlib.s[initlib.s]
+* link:appendixes/m68k-execution-times.txt[Motorola 68000 Instruction Execution Times]
+* link:appendixes/pixel-timings.txt[Pixel Timings (Jim Boulton)]
+* link:appendixes/ikbd.txt[Intelligent Keyboard (IKBD) Protocol]
