@@ -4,4 +4,18 @@ services:
     - docker
 
 script:
+    # Compile all sources
     - docker run --rm -v $PWD/src:/data -w /data nguillaumin/vasm make
+    # Generate HTML from AsciiDoc
+    - docker run --rm -v $PWD:/documents asciidoctor/docker-asciidoctor asciidoctor -a docinfo1 *.adoc
+    # Remove files unnecessary on GitHub pages
+    - rm -f .travis.yml
+    - rm -f .gitignore
+    - rm -f *.adoc
+    # Cleanup compiled files - Sources must be preserved as they are linked to from the tutorials
+    - docker run --rm -v $PWD/src:/data -w /data nguillaumin/vasm make clean
+
+deploy:
+    provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
