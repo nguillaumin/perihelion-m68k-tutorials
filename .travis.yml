@@ -1,0 +1,7 @@
+sudo: required
+
+services:
+    - docker
+
+script:
+    - docker run --rm -v $PWD/src:/data -w /data nguillaumin/vasm make

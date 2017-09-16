@@ -2,6 +2,8 @@ The Atari ST MC68000 Assembly Language Tutorials
 ================================================
 originally by perihelion of poSTmortem
 
+image:https://travis-ci.org/nguillaumin/perihelion-m68k-tutorials.svg?branch=master["Build Status", link="https://travis-ci.org/nguillaumin/perihelion-m68k-tutorials"]
+
 This repository contains the text of the tutorials written by perihelion to
 learn Motorola 68000 development on the Atari ST.
 
