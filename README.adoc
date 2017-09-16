@@ -21,9 +21,18 @@ The main motivation to do so were:
 * Make it it easier to read on mobile devices / small screens
 * Setup a cross-compilation system for development on a modern machine host
 to compile the example sources (see link:src/[src/])
-* Eventually produce eBooks (ePub) for e-readers
+* Eventually produce e-books (ePub) for e-readers
 * Have access to the raw text so that it can be shared and improved by other
 contributors (possibly contribute entirely new tutorials?)
+
+== Assembling the examples
+
+The example sources are in link:src/[src/]. They can be cross-assembled using
+http://sun.hasenbraten.de/vasm/[vasm]. A link:src/Makefile[Makefile] is provided
+to assemble all examples, as well as building a `.st` image with all the
+examples and running it with https://hatari.tuxfamily.org/[Hatari].
+
+See the content of the Makefile for details.
 
 == To do
 
