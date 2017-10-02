@@ -8,23 +8,23 @@ perihelion of poSTmortem
 This document is a compilation and formatting of a set of tutorials created by perihelion with
 the intention to start people in the "art and science" of coding the Atari ST series of
 computers in assembly, one of the more popular programming languages especially for
-games, demos and other hardware-intensive applications. He welcomes any and all feedback
-at <andreaswahlin@bredband.net>.
+games, demos and other hardware-intensive applications.
 
+Sadly Andreas Wahlin aka. perihelion left us 2007, but his legacy lives in the
+form of the best modern tutorials to learn M68000 assembly on the Atari ST.
 
 For the sake of convenience, some very useful texts were added as appendixes, and due
 credit was given where possible. There are still some authors lacking for a few, so please, if
-you know who has written any of the un-credited appendixes, send an e-mail to
-<bruno@atari.st>.
-
+you know who has written any of the un-credited appendixes, please open an issue
+on GitHub.
 
 While many people contributed with comments, suggestions, criticism and general incentive,
 some have been of special help, so perihelion would like to thank:
 
 * Lars Lindblad, for suggesting it in the first place.
 * Bruno Padinha (bp, http://stgameslist.atari.org) for critique and assistance extraordinaire.
-* Marten Maartens (ST Graveyard, http://www.atarilegend.com/) for nice words and providing me with a canvas.
-* Torsten Keltsch (mOdmate/Checkpoint, http://membres.lycos.fr/abrobecker/STart/mOd/mOd.html), for support in my early times.
+* Marten Maartens (ST Graveyard, http://www.atarilegend.com/) for nice words and providing perihelion with a canvas.
+* Torsten Keltsch (mOdmate/Checkpoint, http://membres.lycos.fr/abrobecker/STart/mOd/mOd.html), for support in perihelion early times.
 
 == Table of Contents
 
