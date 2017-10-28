@@ -133,9 +133,9 @@ and so on, then it really looks like this
 [options="header",cols="3*^"]
 |=====================
 |Memory|Value|Meaning
-|$200  | 3   | D
-|$201  | 14  | O
-|$202  | 7   | H
+|$200  | 4   | D
+|$201  | 15  | O
+|$202  | 8   | H
 |$203  | 0   | !
 |...   |     |
 |=====================
@@ -223,7 +223,7 @@ Activate $22
 
 Because what we really want to do is to make the information on these addresses happen;
 we want the computer to process the information given. This is long and clumsy however,
-and the line "Initialie monitor", or whatever you might call it, is far simpler.
+and the line "Initialise monitor", or whatever you might call it, is far simpler.
 
 The computer, internally, understands nothing but 1's and 0's, all text and numbers I have
 given above is for human understanding (more on binary understanding later). Also, none of
