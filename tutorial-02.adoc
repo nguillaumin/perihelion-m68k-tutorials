@@ -69,7 +69,7 @@ knowledge we enter this single line as our source code
 
 [source]
 ----
-                move.w  $700, $ffff8240        ; red background color
+                move.w  #$700, $ffff8240        ; red background color
 ----
 
 Move is the command used for moving values around other values, in this case, we move the
@@ -107,7 +107,7 @@ code looks like this:
                 move.w  #32, -(a7)             ; prepare for super mode
                 trap    #1                     ; call gemdos
                 addq.l  #6, a7                 ; clear up stack
-                move.l  d0, old_stack backup   ; old stack pointer
+                move.l  d0, old_stack          ; backup old stack pointer
 ----
 
 
