@@ -7,7 +7,7 @@ script:
     # Compile all sources
     - docker run --rm -v $PWD/src:/data -w /data nguillaumin/vasm make
     # Generate HTML from AsciiDoc
-    - docker run --rm -v $PWD:/documents asciidoctor/docker-asciidoctor asciidoctor -a docinfo1 *.adoc
+    - docker run --rm -v $PWD:/documents asciidoctor/docker-asciidoctor bash -c "gem install asciidoctor-rouge; asciidoctor -r asciidoctor-rouge -a source-highligher=rouge -a docinfo1 *.adoc"
     # Remove files unnecessary on GitHub pages
     - rm -f .travis.yml
     - rm -f .gitignore

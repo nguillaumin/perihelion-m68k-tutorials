@@ -1,5 +1,6 @@
 The Atari ST MC68000 Assembly Language Tutorials
 ================================================
+:source-language: m68k
 perihelion of poSTmortem
 1st edition (v0.84), August 28th 2004 | edited by bp
 

@@ -1,5 +1,6 @@
 The Atari ST MC68000 Assembly Language Tutorials
 ================================================
+:source-language: m68k
 originally by perihelion of poSTmortem
 
 image:https://travis-ci.org/nguillaumin/perihelion-m68k-tutorials.svg?branch=master["Build Status", link="https://travis-ci.org/nguillaumin/perihelion-m68k-tutorials"]
