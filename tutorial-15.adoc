@@ -1,5 +1,6 @@
 On Fading To Black
 ==================
+:source-language: m68k
 perihelion of poSTmortem
 2002-03-28 (last edition of the initial revision)
 

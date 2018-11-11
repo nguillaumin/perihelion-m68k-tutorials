@@ -1,5 +1,6 @@
 Of Controlling The Puppets
 ==========================
+:source-language: m68k
 perihelion of poSTmortem
 2002-07-13 (last edition of the initial revision)
 

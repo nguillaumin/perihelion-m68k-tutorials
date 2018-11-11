@@ -1,5 +1,6 @@
 Of Scrolling 8 Pixels Per VBL Using Double Buffer
 =================================================
+:source-language: m68k
 perihelion of poSTmortem
 2002-06-14 (last edition of the initial revision)
 
