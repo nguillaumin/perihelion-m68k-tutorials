@@ -1,5 +1,4 @@
-Of Using The Gramophone
-=======================
+= Of Using The Gramophone
 :source-language: m68k
 perihelion of poSTmortem
 2003-02-22 (last edition of the initial revision)

@@ -1,5 +1,4 @@
-Of Making The Mountain Move To Mohammed
-=======================================
+= Of Making The Mountain Move To Mohammed
 :source-language: m68k
 perihelion of poSTmortem
 2002-07-12 (last edition of the initial revision)

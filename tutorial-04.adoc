@@ -1,5 +1,4 @@
-Of The Ways Of Addressing Memory
-================================
+= Of The Ways Of Addressing Memory
 :source-language: m68k
 perihelion of poSTmortem
 2002-06-14 (last edition of the initial revision)

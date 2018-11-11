@@ -1,5 +1,4 @@
-Of Lighting A Candle (And Casting A Shadow)
-===========================================
+= Of Lighting A Candle (And Casting A Shadow)
 :source-language: m68k
 perihelion of poSTmortem
 2002-06-23 (last edition of the initial revision)

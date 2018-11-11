@@ -1,5 +1,4 @@
-On The Theory Behind Programming
-================================
+= On The Theory Behind Programming
 perihelion of poSTmortem
 2002-04-07 (last edition of the initial revision)
 

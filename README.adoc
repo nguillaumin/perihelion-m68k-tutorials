@@ -1,5 +1,4 @@
-The Atari ST MC68000 Assembly Language Tutorials
-================================================
+= The Atari ST MC68000 Assembly Language Tutorials
 :source-language: m68k
 originally by perihelion of poSTmortem
 

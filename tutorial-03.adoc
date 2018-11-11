@@ -1,5 +1,4 @@
-Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps
-==============================================================================================================
+= Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps
 :source-language: m68k
 perihelion of poSTmortem
 2002-06-14 (last edition of the initial revision)
