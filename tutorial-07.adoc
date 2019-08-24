@@ -248,6 +248,10 @@ reality, here's the scroller.
 include::src/tut07.s[]
 ----
 
+.A scroller
+image::img/tutorial-07-screenshot.png[]
+
+
 There are really only two more small things that are new; the font counter and the message
 pointer. Also take note how I put in the scrolling message, by just using lots of `dc.b`, and a `0`
 as an end control character. By changing the text here, you can obviously change the scroller

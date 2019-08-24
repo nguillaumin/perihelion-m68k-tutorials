@@ -170,6 +170,9 @@ little new code
 include::src/tut14.s[]
 ----
 
+.Music
+image::img/tutorial-14-screenshot.png[]
+
 I start off with a normal setup, then read in the music data as described previously and start
 the main routine. The main routine here has the actual routine for playing the tune, and the
 rest of the code is just VU bars.

@@ -671,6 +671,9 @@ stuff will be familiar.
 include::src/tut11.s[]
 ----
 
+.Sprite on autumn
+image::img/tutorial-11-screenshot.png[]
+
 The longest source to date, I'm truly starting to doubt the wisdom of putting the source code
 here as well as in a separate file. Anyways, starting from beginning going down, this is what
 it's all about. The first two lines are the X and Y speed, you may play around with these
@@ -722,5 +725,3 @@ Somewhere soon I suppose I'll do one on joystick and perhaps also mouse operatio
 promise anything though. Big thanks again go out to Bruno Padinha, for providing valuable
 feedback and hitting me on the head. Damn, now I have to think of a good quote as well,
 this part is the hardest. ☺
-
-

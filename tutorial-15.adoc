@@ -149,6 +149,9 @@ source
 include::src/tut15.s[]
 ----
 
+.Fading
+image::img/tutorial-15-screenshot.png[]
+
 First I save the palette of the picture in a storage space, then I put the temporary palette in,
 since the temporary palette is initialised to all 0's, this has the effect of blacking out the
 screen. Next I load up the picture as described in <<tutorial-06#,tutorial 6>> and set up

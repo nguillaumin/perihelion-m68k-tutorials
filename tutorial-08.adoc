@@ -355,6 +355,9 @@ than that. This is the source code for the scroller.
 include::src/tut08.s[]
 ----
 
+.A betterscroller
+image::img/tutorial-08-screenshot.png[]
+
 Not too much has been changed since the 16 pixel scroller. In the beginning, there's the code
 for setting up two screen areas. Then, in the main routine, we put one screen address in.
 Notice also how the font_counter is now 4 instead of 2, because we only need new font data

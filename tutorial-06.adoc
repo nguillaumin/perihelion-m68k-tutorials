@@ -159,6 +159,10 @@ animation and stuff, uninteresting in our case).
 include::src/tut06.s[]
 ----
 
+.Jet Li
+image::img/tutorial-06-screenshot.png[]
+
+
 There are three new instructions here, `movem`, `incbin` and `include`. Include is the easy one,
 just consider it as though you had pasted the entire contents of the `initlib.s` file on the include
 line. As you will see, when you assemble the code, this takes a while since the Atari needs to

@@ -214,6 +214,9 @@ nicely. Actually, theory part over, time for source code:
 include::src/tut13.s[]
 ----
 
+.Music
+image::img/tutorial-13-screenshot.png[]
+
 Here we go! Setup the music to work, then put in the palette. Backup the old `$70` by putting
 it on the stack, put in my own `$70` routine, wait for keypress, shut down music, restore and
 exit. All the usual stuff.

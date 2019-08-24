@@ -187,6 +187,9 @@ of the program, hold on!
 include::src/tut12.s[]
 ----
 
+.Xenon 2
+image::img/tutorial-12-screenshot.png[]
+
 Yup, another long source code. There are big similarities between the sprite tutorial though,
 since we're basically doing the same thing. The new things are of course the joystick on and
 off, which are located between the "; joy code" comments, after the pre-shiftings. Nothing to

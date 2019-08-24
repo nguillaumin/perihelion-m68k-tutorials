@@ -260,6 +260,9 @@ wait for a key to be pressed, lo and behold! I found it, and just copied the inf
 this, the value from `d7` is put into colour 0, effectively restoring the old background colour.
 Lastly, a jump to the restore subroutine and a clean system exit.
 
+.Red background waiting for a keypress
+image::img/tutorial-03-screenshot.png[]
+
 Now we have begun to forcefully control the program flow, the code isn't executed "top
 down", but with commands such as `jsr` and `rts` (Return from SubRoutine) we can jump
 around. Usually, programs are built up of some initialisation routine, and then a loop more or

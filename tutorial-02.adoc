@@ -133,11 +133,15 @@ include::src/tut02.s[]
 ----
 
 Running this program will successfully change the background colour to red, and then make a
-nice and clean exit, restoring the Atari to user mode once again. Problem is, we now have a
-red background. Not to good you might think. This can be easily remedied however, we have
-made a program that changes background colour, let's use it! Change the value `#$700` to
-`#$777` and run the program again. The background colour will now be white as snow, like
-we're used to.
+nice and clean exit, restoring the Atari to user mode once again.
+
+.Red background
+image::img/tutorial-02-screenshot.png[]
+
+Problem is, we now have a red background. Not to good you might think. This can be easily
+remedied however, we have made a program that changes background colour, let's use it!
+Change the value `#$700` to `#$777` and run the program again. The background colour
+will now be white as snow, like we're used to.
 
 In the next tutorial, I plan to cover hexadecimal, binary and decimal numbers, program flow
 and talk some about traps and registers.

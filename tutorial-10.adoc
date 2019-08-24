@@ -351,6 +351,10 @@ program.
 include::src/tut10.s[]
 ----
 
+.Pixels
+image::img/tutorial-10-screenshot.png[]
+
+
 Yes, first a normal initialisation, then the neat trick of putting the screen address in a0,
 followed up by putting the background black and clearing the screen. Then, a main routine,
 the question here is why I didn't I use the `$70` as described in tutorial 9. The reason is a bit

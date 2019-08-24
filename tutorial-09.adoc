@@ -400,6 +400,9 @@ US TOS running at 60Hz.
 include::src/tut09.s[]
 ----
 
+.No top and bottom border
+image::img/tutorial-09-screenshot.png[]
+
 Phew, that was some. Nice and gentle walkthrough. First, just as usual, just initialise screen
 and so on. The picture is 320×280 pixels, instead of the normal 320×200. For compatibility
 reasons, I did it in Degas format, so you'll have no problem looking at it in Degas, but you'll

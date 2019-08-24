@@ -300,6 +300,10 @@ VBLs, and then running through 7 such waits.
 include::src/tut05.s[]
 ----
 
+.3 colors
+image::img/tutorial-05-screenshot.png[]
+
+
 Oh, naughty me, I added a bunch of stuff to my initlib without telling you about it. Well, right
 now, you'll just have to accept it, any problems with that private!? The thing it does is to save
 all information regarding resolution, screen setup and so on, then change to low resolution.
