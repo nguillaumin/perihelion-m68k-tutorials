@@ -176,7 +176,7 @@ position, is also known as the text you entered. Every line of source code has i
 value, which of course is some hex value, so instead of trying to figure out that hex value,
 you tell the assembler that "henceforth, this line shall be known as [whatever you write]".
 Also, any text written after the instruction, is treated as comments and are passed over by
-the assembler. You may also use a `*` to denote comments. Comments beginning with a `*`
+the assembler. You may also use a `+*+` to denote comments. Comments beginning with a `+*+`
 can be inserted everywhere.
 
 Disclaimer: the "actual memory position" values are purely for example and have nothing to

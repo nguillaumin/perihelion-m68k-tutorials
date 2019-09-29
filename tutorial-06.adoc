@@ -96,7 +96,7 @@ The memory area is most interesting, this is where the entire content of the mem
 By pressing `m`, you can type in the name of any memory tag (variable) that you are using,
 and see what the memory that it points to contains. If you're smart, you'll immediately type
 in `ff8240`, which will take you directly to the palette. Unfortunately, that will get you little,
-since this is protected memory, you'll only see `*`'s.
+since this is protected memory, you'll only see `+*+`'s.
 
 You can change between these areas by pressing tab, and you can only issue commands in
 the active area. When you are done debugging, you don't have to wait for the whole program
