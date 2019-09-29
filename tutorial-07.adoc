@@ -69,7 +69,7 @@ as a coordinate system, then `C` would be at 3,5. We need to increment the point
 certain value for each coordinate, this shouldn't be to hard.
 
 Each line is 160 bytes, and each character is 32 lines. This means that for every Y coordinate,
-we need to increment the pointer by 32 × 160 bytes, right? Think about it, if we want `*`
+we need to increment the pointer by 32 × 160 bytes, right? Think about it, if we want `+*+`
 which is on the second line (1,0), we need to point to the font address + 32 lines down. Each
 character is 32 pixels wide, 16 pixels are 4 words, taking up 8 bytes, we need twice this. So
 for each X coordinate, we need to increment the pointer by 16 bytes.

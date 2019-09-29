@@ -73,7 +73,7 @@ knowledge we enter this single line as our source code
 ----
 
 Move is the command used for moving values around other values, in this case, we move the
-value `#$700` into memory position `$ffff8240`. The `#` indicates that what comes after is an
+value `#$700` into memory position `$ffff8240`. The `+#+` indicates that what comes after is an
 absolute value, and the `$` means that the value is hexadecimal, instead of decimal (more on
 this later, accept for now). The `.w` after the move instruction means that the move instruction
 should move a word, indicating the size of the thing you want moved (more on this later also,

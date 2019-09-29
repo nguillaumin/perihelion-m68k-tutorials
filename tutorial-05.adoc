@@ -22,9 +22,9 @@ thought I'd take a quick repetition and just go over a few basic things.
 [options="header",cols="2*^"]
 |=========================
 | Symbol | Meaning
-| `#`    | decimal value
-| `#%`   | binary value
-| `#$`   | hexadecimal value
+| `+#+`    | decimal value
+| `+#+%`   | binary value
+| `+#+$`   | hexadecimal value
 | `$`    | memory address, expressed in hexadecimal
 | `.b`   | Byte
 | `.w`   | Word

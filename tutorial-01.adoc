@@ -206,7 +206,7 @@ Put #255 at $204
 Initialise monitor
 ....
 
-Now, as you can guess, `#` stands for value, a numerical value in our case, and `$` stands for
+Now, as you can guess, `+#+` stands for value, a numerical value in our case, and `$` stands for
 address. Now, if we compile this source code, that is, translate it to a format the computer
 understands, we will get a `.prg` file. When we double click on that file, the computer will do
 what it says above: the different values will be loaded into the different addresses, creating

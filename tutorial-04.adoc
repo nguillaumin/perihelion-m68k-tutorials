@@ -117,10 +117,10 @@ clear with time I think, and especially after this example.
 |=======================
 
 As you might have noticed, if you studied the example thoroughly, when you want an
-address register to point to a place, you use `#` when giving the address, but when you want
-the content of the address of a memory location, you don't use `#`. Thus, if you want `a0` to
+address register to point to a place, you use `+#+` when giving the address, but when you want
+the content of the address of a memory location, you don't use `+#+`. Thus, if you want `a0` to
 point to `$100`, you use `move.l #$100, a0`. But if you want the value of memory address `$100`
-to be put into `d0`, you use `move.l $100, d0`. So, with a `#`, you have a value, but without `#`,
+to be put into `d0`, you use `move.l $100, d0`. So, with a `+#+`, you have a value, but without `+#+`,
 you have a pointer.
 
 I think that should cover it nicely. These memory addressing modes are our main concern,
@@ -176,7 +176,7 @@ position, is also known as the text you entered. Every line of source code has i
 value, which of course is some hex value, so instead of trying to figure out that hex value,
 you tell the assembler that "henceforth, this line shall be known as [whatever you write]".
 Also, any text written after the instruction, is treated as comments and are passed over by
-the assembler. You may also use a `*` to denote comments. Comments beginning with a `*`
+the assembler. You may also use a `+*+` to denote comments. Comments beginning with a `+*+`
 can be inserted everywhere.
 
 Disclaimer: the "actual memory position" values are purely for example and have nothing to
