@@ -102,8 +102,8 @@ don't get all this, this topic will probably be covered by every beginner's book
 there, go find an additional source of information.
 
 In Devpac, values are expressed by putting `+#+` in front of a number, then further using `$` or
-`%` before numbers to indicate hexadecimal or binary numbers. Thus, `+#+` means decimal, `+#+$`
-means hexadecimal value and `+#+%` means binary value. So, as you see, it's customary to
+`%` before numbers to indicate hexadecimal or binary numbers. Thus, `+#+` means decimal, `+#$+`
+means hexadecimal value and `+#%+` means binary value. So, as you see, it's customary to
 express memory addresses in hexadecimal. `$` (without `+#+`) means value at memory address.
 
 Huh, that was that, now onto the architecture of the Atari! Every computer comes with a
