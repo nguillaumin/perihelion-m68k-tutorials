@@ -23,8 +23,8 @@ thought I'd take a quick repetition and just go over a few basic things.
 |=========================
 | Symbol | Meaning
 | `+#+`    | decimal value
-| `+#+%`   | binary value
-| `+#+$`   | hexadecimal value
+| `+#%+`   | binary value
+| `+#$+`   | hexadecimal value
 | `$`    | memory address, expressed in hexadecimal
 | `.b`   | Byte
 | `.w`   | Word
