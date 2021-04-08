@@ -1,7 +1,5 @@
-= Of The Workings Of Devpac 3 And The Realisation Of Some Code
-:source-language: m68k
-perihelion of poSTmortem
-2002-06-14 (last edition of the initial revision)
+== Of The Workings Of Devpac 3 And The Realisation Of Some Code
+_2002-06-14 (last edition of the initial revision)_
 
 [quote, Tai Chi Master]
 ____

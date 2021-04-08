@@ -16,12 +16,12 @@ are identical to the originals.
 
 The main motivation to do so were:
 
-* Have an alternative format to the PDF
+* Have an alternative format to the original PDF
 * Ability to read the tutorials in a browser, in a (hopefully) pleasant font
 * Make it it easier to read on mobile devices / small screens
 * Setup a cross-compilation system for development on a modern machine host
 to compile the example sources (see link:src/[src/])
-* Eventually produce e-books (ePub) for e-readers
+* Produce an e-book (ePub) for e-readers
 * Have access to the raw text so that it can be shared and improved by other
 contributors (possibly contribute entirely new tutorials?)
 
@@ -38,10 +38,6 @@ See the content of the Makefile for details.
 
 A few issues remain:
 
-* There's no module to highlight the m68k assembly syntax in the
-http://asciidoctor.org/docs/user-manual/#available-source-highlighters[syntax
-highlighters used by AsciiDoctor]. It would be nice to contribute one to have
-syntax highlighting on the tutorials
 * I grabbed some images such as the different sprite operations (AND, OR, etc.)
 from the original PDF. It would be better to write the programs that generated
 these images and grab a screenshot instead.
@@ -49,4 +45,3 @@ these images and grab a screenshot instead.
 hard to read on small screens. They should be reduced.
 * Update the source code to be compatible with Devpac so that it can be compiled
 on an Atari (remove spaces after commas).
-

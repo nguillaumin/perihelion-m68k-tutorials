@@ -1,7 +1,5 @@
-= Of The Ways Of Addressing Memory
-:source-language: m68k
-perihelion of poSTmortem
-2002-06-14 (last edition of the initial revision)
+== Of The Ways Of Addressing Memory
+_2002-06-14 (last edition of the initial revision)_
 
 [quote, Star Trek VI - The Undiscovered Country]
 ____

@@ -1,7 +1,5 @@
-= On Scrollers
-:source-language: m68k
-perihelion of poSTmortem
-2002-06-14 (last edition of the initial revision)
+== On Scrollers
+_2002-06-14 (last edition of the initial revision)_
 
 [quote, The One]
 ____

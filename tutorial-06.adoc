@@ -1,7 +1,5 @@
-= Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files
-:source-language: m68k
-perihelion of poSTmortem
-2002-07-01 (last edition of the initial revision)
+== Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files
+_2002-07-01 (last edition of the initial revision)_
 
 [quote, Fong Sai-Yuk]
 ____

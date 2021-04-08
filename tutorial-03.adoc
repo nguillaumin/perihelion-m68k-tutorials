@@ -1,7 +1,5 @@
-= Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps
-:source-language: m68k
-perihelion of poSTmortem
-2002-06-14 (last edition of the initial revision)
+== Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps
+_2002-06-14 (last edition of the initial revision)_
 
 [quote, Fist of Legend]
 ____

@@ -1,7 +1,5 @@
-= Of Making The Mountain Move To Mohammed
-:source-language: m68k
-perihelion of poSTmortem
-2002-07-12 (last edition of the initial revision)
+== Of Making The Mountain Move To Mohammed
+_2002-07-12 (last edition of the initial revision)_
 
 [quote, Star Trek VI, the Undiscovered Country]
 ____

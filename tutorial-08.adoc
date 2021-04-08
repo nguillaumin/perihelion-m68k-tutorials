@@ -1,7 +1,5 @@
-= Of Scrolling 8 Pixels Per VBL Using Double Buffer
-:source-language: m68k
-perihelion of poSTmortem
-2002-06-14 (last edition of the initial revision)
+== Of Scrolling 8 Pixels Per VBL Using Double Buffer
+_2002-06-14 (last edition of the initial revision)_
 
 [quote, Bruce Lee]
 ____

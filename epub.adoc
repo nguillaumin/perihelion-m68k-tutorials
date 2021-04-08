@@ -1,12 +1,9 @@
 = The Atari ST MC68000 Assembly Language Tutorials
 :doctype: book
 :source-language: m68k
-:toc: left
-:icons: font
+:toc:
 perihelion of poSTmortem
 1st edition (v0.84), August 28th 2004 | edited by bp
-
-TIP: This tutorial is also available in link:perihelion-m68k-tutorials.epub[ePub format].
 
 include::foreword.adoc[]
 
@@ -40,4 +37,3 @@ include::tutorial-14.adoc[]
 
 include::tutorial-15.adoc[]
 
-include::appendixes.adoc[]

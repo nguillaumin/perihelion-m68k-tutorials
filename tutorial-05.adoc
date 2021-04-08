@@ -1,7 +1,5 @@
-= Of The Workings Of The Graphics Memory And Minor Skills In Branching
-:source-language: m68k
-perihelion of poSTmortem
-2002-07-01 (last edition of the initial revision)
+== Of The Workings Of The Graphics Memory And Minor Skills In Branching
+_2002-07-01 (last edition of the initial revision)_
 
 [quote, Romeo and Juliet]
 ____
