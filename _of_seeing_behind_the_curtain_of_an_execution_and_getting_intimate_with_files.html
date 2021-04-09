@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<meta name="author" content="perihelion of poSTmortem">
+<title>The Atari ST MC68000 Assembly Language Tutorials</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
+<a href="https://github.com/nguillaumin/perihelion-m68k-tutorials"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_of_seeing_behind_the_curtain_of_an_execution_and_getting_intimate_with_files" class="book toc2 toc-left">
+<div id="header">
+<h1>The Atari ST MC68000 Assembly Language Tutorials</h1>
+<div class="details">
+<span id="author" class="author">perihelion of poSTmortem</span><br>
+<span id="revnumber">version 1st edition (v0.84),</span>
+<span id="revdate">August 28th 2004 | edited by bp</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="index.html">The Atari ST MC68000 Assembly Language Tutorials</a></span></p><ul class="sectlevel1">
+<li><a href="_foreword.html">Foreword</a>
+</li>
+<li><a href="_on_the_theory_behind_programming.html">On The Theory Behind Programming</a>
+</li>
+<li><a href="_of_the_workings_of_devpac_3_and_the_realisation_of_some_code.html">Of The Workings Of Devpac 3 And The Realisation Of Some Code</a>
+</li>
+<li><a href="_of_various_things_mystic_and_important_mainly_concerning_the_art_of_understanding_digits_and_performing_traps.html">Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps</a>
+</li>
+<li><a href="_of_the_ways_of_addressing_memory.html">Of The Ways Of Addressing Memory</a>
+</li>
+<li><a href="_of_the_workings_of_the_graphics_memory_and_minor_skills_in_branching.html">Of The Workings Of The Graphics Memory And Minor Skills In Branching</a>
+</li>
+<li><a href="_of_seeing_behind_the_curtain_of_an_execution_and_getting_intimate_with_files.html"><span class="toc-current">Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files</span></a>
+</li>
+<li><a href="_on_scrollers.html">On Scrollers</a>
+</li>
+<li><a href="_of_scrolling_8_pixels_per_vbl_using_double_buffer.html">Of Scrolling 8 Pixels Per VBL Using Double Buffer</a>
+</li>
+<li><a href="_of_revealing_the_unseen_and_expanding_our_consciousness_without_the_use_of_illegal_drugs.html">Of Revealing The Unseen And Expanding Our Consciousness Without The Use Of Illegal Drugs</a>
+</li>
+<li><a href="_of_lighting_a_candle_and_casting_a_shadow.html">Of Lighting A Candle (And Casting A Shadow)</a>
+</li>
+<li><a href="_of_making_the_mountain_move_to_mohammed.html">Of Making The Mountain Move To Mohammed</a>
+</li>
+<li><a href="_of_controlling_the_puppets.html">Of Controlling The Puppets</a>
+</li>
+<li><a href="_of_hearing_that_which_is_spoken.html">Of Hearing That Which Is Spoken</a>
+</li>
+<li><a href="_of_using_the_gramophone.html">Of Using The Gramophone</a>
+</li>
+<li><a href="_on_fading_to_black.html">On Fading To Black</a>
+</li>
+<li><a href="_appendixes.html">Appendixes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_of_seeing_behind_the_curtain_of_an_execution_and_getting_intimate_with_files">Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>2002-07-01 (last edition of the initial revision)</em></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Great! I love fighting.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Fong Sai-Yuk
+</div>
+</div>
+<div class="paragraph">
+<p>Hiya&#8217;all, it&#8217;s been a little while since the last tutorial. Mainly because I wanted to code a little
+bit for myself and not only write stuff. This tutorial will NOT be about scrolling, unfortunately,
+but it will cover the theoretical base which you&#8217;ll need to be able to do the scrolling as will be
+covered in the next tutorial. However, after this tutorial, you may figure it out by yourself. Of
+course, the thing you have to do to scroll, is to just move the correct screen memory bytes to
+the correct place. This will be covered in depth in the next tutorial, promise.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re now beginning to get past the most fundamental theory, and so our code is getting to
+be more and more advanced. This in turn means that often, a program will assemble without
+errors, but it still won&#8217;t work the way we want it to. Something somewhere is not as we
+thought it would be, a variable might not be assigned the correct value, a mathematical
+equation might not produce what we thought and so on; endless possibilities. This is where
+the debugger comes in. Debugger? says you. To illustrate, let me tell you this fairy tale.</p>
+</div>
+<div class="paragraph">
+<p>In the olden days, there was a big computer. So big it was that two men could not put their
+arms around it. The computer stood in the big country that lies west of here, and all day long
+it crunched numbers. It was very happy. Then, one day, it could not crunch numbers any
+more, something was wrong and the computer fell sick. All the people in white robes, that
+saw to the computers every need, were greatly distressed. No one knew what was wrong.
+So, in a last desperate effort, they opened up the poor computer to have a look inside. They
+found that a little bug had flown in, and that was the root to the sickness. So, the people in
+the white robes removed the bug, and the computer was again healthy. It was all smiles and
+could once again crunch numbers all day long. Thus endeth the tale. (since this is a fairy tale,
+I make no claims that the exact facts are true, but like all legends, it contain a grain of truth)</p>
+</div>
+<div class="paragraph">
+<p>Debugging, is the art of removing errors from source code. This is actually very hard, and
+one can probably be as skilled in debugging as writing code in the first place. Debugging
+usually takes at least half the time of developing a program, so good planning and lots of
+time in the debugger is a good thing indeed. Nowadays, bugs are errors in the source code,
+rather than actually physical bugs. Debugging is getting rid of bugs, creating error free code,
+and a debugger is a tool that helps you with this process. Devpac comes with a debugger,
+called MonST, I guess it stands for MONitor ST.</p>
+</div>
+<div class="paragraph">
+<p>After you&#8217;ve assembled to memory, instead of pressing <code>ALT+x</code> and run the program, you can
+press <code>ALT+m</code> and run the MonST, henceforth referred to as the debugger. Lots of information
+will pop at you, and after you&#8217;ve come over the shock, you&#8217;ll start to make quick sense of it.
+There are three "windows", areas rather, registers, disassembly pc and the memory. The
+disassembly pc area is your actual source code, the other two should speak for themselves.
+When you are in debugger mode, instructions will be executed one at a time, this allows you
+to see how each instructions change the content of memory and registers. I&#8217;ll go through
+each area and what you do with it.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/tutorial-06-monst.gif" alt="tutorial 06 monst">
+</div>
+<div class="title">Figure 4. MonST</div>
+</div>
+<div class="paragraph">
+<p>Registers, here you have the content of all data registers, all address registers, the status
+register and the program counter. All values are given in hex, which makes every two digits
+one byte, and each digit one nibble. As you can see, there are eight digits for each data
+register, which makes sense since you can store a longword in a data register. When data
+registers are beginning to get filled with values, there will pop up some symbols, sometimes
+strange, to the right of the register. These symbols are the ASCII equivalents for each byte in
+the data register. We haven&#8217;t talked about ASCII I think, but it&#8217;s the way to represent
+characters with numbers I mentioned back in tutorial one. For example, the number <code>$41</code> is
+the letter <code>A</code>.</p>
+</div>
+<div class="paragraph">
+<p>The address registers are to the right of the data registers, and work pretty much the same.
+To the right of the address registers, are the memory content that the address register points
+to. Since there are four digits to every group, each group is a word. Thus, to the right of each
+address register, is the memory content of the first five words that the address register points
+to. To the right of the memory content, you&#8217;ll also see ASCII representations of the content,
+just as with the data registers.</p>
+</div>
+<div class="paragraph">
+<p>Below the data registers, are the status register and the program counter. The status register
+haven&#8217;t been mentioned much either, but it takes note of several statuses of the ST, for now,
+it will probably be 0300 and you&#8217;ll se a <code>U</code> to the right of it. The U means User mode, and
+that&#8217;s what we&#8217;re in now until we change it to Supervisor. The status register will also keep
+track if a mathematical operation results in a overflow and so on. An overflow is when the
+number generated is bigger than can be stored, for example, adding two data registers with
+very big values will generate a value to big to store in one data register, so data loss will
+occur. Below the status register is the program counter, and to the right of the program
+counter you&#8217;ll see the instruction that it points to.</p>
+</div>
+<div class="paragraph">
+<p>The disassembly area is the code you&#8217;re currently debugging. It will look just like your source
+code. You can scroll up and down the code, and a little arrow will indicate your current
+position. To execute a line of code, press <code>ALT+z</code>, to skip a line of code, press <code>ALT+s</code>. Usually,
+you&#8217;ll want to skip jumping into the initialise subroutine, because this takes some time and
+might also put the ST in low resolution, making it hard to see anything. You&#8217;ll usually want to
+go to the mathematical equations directly, to see what happens. There&#8217;s also a very nice way
+to jump straight to a position of your choosing. You can put "flags" in your source code, by
+entering the command "illegal", then, when in debugger mode, hit <code>CTRL+r</code>. This will execute all
+commands from your current position to the next illegal position, you&#8217;ll have to skip past the
+illegal instruction to continue, using <code>ALT+s</code>. A great way for executing an entire loop without
+stepping through it all.</p>
+</div>
+<div class="paragraph">
+<p>The memory area is most interesting, this is where the entire content of the memory is listed.
+By pressing <code>m</code>, you can type in the name of any memory tag (variable) that you are using,
+and see what the memory that it points to contains. If you&#8217;re smart, you&#8217;ll immediately type
+in <code>ff8240</code>, which will take you directly to the palette. Unfortunately, that will get you little,
+since this is protected memory, you&#8217;ll only see `*&#8217;s.</p>
+</div>
+<div class="paragraph">
+<p>You can change between these areas by pressing tab, and you can only issue commands in
+the active area. When you are done debugging, you don&#8217;t have to wait for the whole program
+to execute and terminate, just hit <code>CTRL+c</code>, twice. Now this is useful, right? The best way to get
+to the workings of the debugger is, like always in programming, to get to it; debug some
+simple piece of code and see what happens to the registers and memory. Oh, yes, in the
+memory area, you can also type in <code>aN</code> (where n is 0-7) to get directly to the memory area
+pointed to by an address register.</p>
+</div>
+<div class="paragraph">
+<p>Now, onto file formats! A file is simply a collection of data. There really is no such thing as a
+<code>.pi1</code> (Degas Elite) file, or an <code>.mp3</code> file. A file contains data, so, this data is interpreted.
+Different things will happen depending on how you interpret the data. Let&#8217;s say, for example,
+that we have a file containing only a byte, and it holds this data</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="mb">%01000001</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Easy, says some paint program, these are the first eight pixels in monochrome mode. Pixel
+number 2 and 8 is supposed to be black, the rest are white. No, says the text editor,
+<code>%01000001</code> is <code>$41</code>, which corresponds to ASCII character <code>A</code>. This is the letter A. Nonsense,
+says the home taxation program, <code>%01000001</code> is a control code in my program that says this
+file represents a terminated account&#8230;&#8203; and so on. Programs interpret files, and do something
+with the information. Since programs are also files themselves, interpreted by the operation
+system, which is itself also files more or less, the whole shit is built on subjective opinions on
+what to do with the data presented.</p>
+</div>
+<div class="paragraph">
+<p>Given the information above, one might think that it&#8217;s a good way to know how different
+programs interpret data, this is the knowledge of file formats. In order to understand this, we
+will examine a very simple file format, the Degas Elite <code>.pi1</code> file format. It&#8217;s almost too simple
+really, but it&#8217;s useful and we&#8217;re going to use it in our next tutorial. Usually, files have so called
+file headers, which give some information about the file. For example, a Windows BMP file,
+starts with the ASCII codes for <code>B</code> and <code>M</code>, which makes sense and gives a signal of what kind
+of file it is. It&#8217;s of a little nerdy interest to know that each <code>.exe</code> file on the PC, starts with the
+ASCII codes for the letters <code>MZ</code>, which was some hot shot in Microsoft back when they
+defined the file format (and perhaps still). A good example of a file header could perhaps be
+the resolution of an image, or the font type in a word processor file.</p>
+</div>
+<div class="paragraph">
+<p>In order to examine files correctly, we need a so called hex editor. A normal text editor will
+not do, since the text editor would interpret data as ASCII code, we want a program that just
+presents the data in the file, and does not interpret it in any way. With this hex editor, you
+can "hack" files yourself. Say, for example, that you want a program that converts one
+graphic file format to another; you&#8217;d need knowledge of both file formats. Sit down with a
+paint program, and a hex editor. Do some small changes in the paint program, and watch
+what&#8217;s changing in the file with the hex editor. This is tedious work, at best, and you&#8217;re
+probably better off trying to locate the information somewhere. So, in order for you to begin
+and try out your efforts, I will tell you how the <code>.pi1</code> files look like.</p>
+</div>
+<div class="paragraph">
+<p>First, there are two bytes giving the resolution, in low resolution, it&#8217;s just 0, in medium, 1,
+and in high resolution, 2. Then comes 32 bytes containing the palette data for the picture.
+After that comes the pixel information, looking exactly the way it does in the screen memory.
+And that is that. Very simple file format indeed. So, how big is a <code>.pi1</code> file then, only knowing
+the above? 32034 bytes. 32000 bytes for the pixel information, 32 bytes for the palette, and
+two extra bytes in the beginning of the file. Here&#8217;s a little program that will display a <code>.pi1</code> file
+(a little note: in Degas Elite, there are 32 bytes in the end containing information on
+animation and stuff, uninteresting in our case).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">jsr</span>     <span class="nv">initialise</span>
+
+                <span class="k">movem</span><span class="nd">.l </span><span class="nv">picture</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="nb">d0</span><span class="o">-</span><span class="nb">d7</span>         <span class="c1">; put picture palette in d0-d7</span>
+                <span class="k">movem</span><span class="nd">.l </span><span class="nb">d0</span><span class="o">-</span><span class="nb">d7</span><span class="p">,</span> <span class="mh">$ff8240</span>           <span class="c1">; move palette from d0-d7</span>
+
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>                <span class="c1">; get physbase</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>
+
+                <span class="k">move</span><span class="nd">.l </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; a0 points to screen memory</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="nd">#</span><span class="nv">picture</span><span class="o">+</span><span class="mi">34</span><span class="p">,</span> <span class="nb">a1</span>          <span class="c1">; a1 points to picture</span>
+
+                <span class="k">move</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">7999</span><span class="p">,</span> <span class="nb">d0</span>                <span class="c1">; 8000 longwords to a screen</span>
+<span class="nl">loop</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="p">(</span><span class="nb">a1</span><span class="p">)</span><span class="o">+</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span><span class="o">+</span>             <span class="c1">; move one longword to screen</span>
+                <span class="k">dbf</span>     <span class="nb">d0</span><span class="p">,</span> <span class="nv">loop</span>
+
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>                <span class="c1">; wait keypress</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">1</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>
+
+                <span class="k">jsr</span>     <span class="nv">restore</span>
+
+                <span class="k">clr</span><span class="nd">.l </span>  <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">1</span>
+
+                <span class="kr">include</span> <span class="nv">initlib</span><span class="nd">.s
+</span>
+                <span class="kr">section</span> <span class="nv">data</span>
+
+<span class="nl">picture</span>         <span class="kr">incbin</span>  <span class="nv">jet_li</span><span class="p">.</span><span class="nv">pi1</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/tutorial-06-screenshot.png" alt="tutorial 06 screenshot">
+</div>
+<div class="title">Figure 5. Jet Li</div>
+</div>
+<div class="paragraph">
+<p>There are three new instructions here, <code>movem</code>, <code>incbin</code> and <code>include</code>. Include is the easy one,
+just consider it as though you had pasted the entire contents of the <code>initlib.s</code> file on the include
+line. As you will see, when you assemble the code, this takes a while since the Atari needs to
+read the file each time. Therefore, I strongly suggest you actually do paste the file in, instead
+of just including it. Your choice.</p>
+</div>
+<div class="paragraph">
+<p>Incbin, as you may have guessed, is the way to include files, they fall under the section data.
+This puts the entire contents of the file in memory. In this particular case, I put the entire
+contents of the <code>.pi1</code> file called <code>jet_li.pi1</code> at the memory position I choose to call <code>picture</code>. You
+can achieve the same result by hand copying the content of <code>jet_li.pi1</code>. Something like
+<code>picture dc.b 0,0,0,0,$07,$11&#8230;&#8203;</code> (this is the beginning of the file)</p>
+</div>
+<div class="paragraph">
+<p>Movem MOVEs Multiple data from memory to registers or the other way around. It can only
+move words and longwords. As you can see, I move the memory from <code>picture+2</code> into the
+data registers. This is great since all eight data registers can hold all in all 32 bytes of data,
+since each colour is 2 bytes of data, this means that the entire palette of 16×2 bytes of data
+fits precisely into the eight data registers. The reason for <code>picture+2</code> is that we want to skip
+the first two bytes, since they only contain resolution information. After filling the data
+registers with the palette, we just smack it in at the correct starting address.</p>
+</div>
+<div class="paragraph">
+<p>Then, it&#8217;s a question of putting the screen memory pointer in <code>a0</code>, and the start of the pixel
+part of the picture in <code>a1</code>. The <code>picture+34</code> is because this is where the pixel part starts, 2
+resolution bytes plus 32 palette bytes is 34 bytes that should be skipped in order to reach the
+pixel part. As shown in the previous tutorial, the screen size is 8000 longwords. I just loop
+through that amount, copying the content from the picture into the screen memory. Easy?
+This is a small loader for <code>.pi1</code> files. If you assemble this piece of code as a <code>.prg</code> file (or just
+take my pre-assembled file), you&#8217;ll notice that the program size will be 32494. Most of this is
+the <code>.pi1</code> file itself, our added code is only 32494 - 32034 = 460 bytes. We now have a self-
+loading <code>.pi1</code> image, nice.</p>
+</div>
+<div class="paragraph">
+<p>If you think it would be amusing, you can add this little loader to all your .pi1 files, in this
+way, you&#8217;ll never have to go through Degas to watch them, they load themselves. Of course,
+you&#8217;ll get a <code>.prg</code> file instead of a <code>.pi1</code> file, meaning that you can&#8217;t edit it with Degas. But then
+you could write your own program for extracting the image information and turn it into a <code>.pi1</code>
+file again. Fun, right? Note; you don&#8217;t have to keep the original <code>.pi1</code> file for this "loader" to
+work, since the <code>.prg</code> file contains the data it needs for the image.</p>
+</div>
+<div class="paragraph">
+<p>While we&#8217;re on the topic, I will mention, briefly, compression. You must know what file
+compression is, it&#8217;s making a file smaller, but usually useless, until you decompress, or
+unpack, it again. How does this work? The file can&#8217;t just shrink, can it? Well, more or less, it
+actually can. Consider this information:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="mb">%00000000</span>
+<span class="mb">%11111111</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first byte is all 0&#8217;s, and the second one all 1&#8217;s. Suppose we replace the information given
+with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="nl">08</span>
+<span class="nl">18</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and tell the program that after each 1&#8217;s or 0&#8217;s, there will be a number that tells how many 1&#8217;s
+or 0&#8217;s there will be. If we have a file with big areas of similar data, for example 50 bytes of
+0&#8217;s and then 70 bytes of 1&#8217;s, this so called compression algorithm would compress this
+information into four bytes. It would look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="nl">050</span>
+<span class="nl">170</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or, just to give you some bit mathematics, we say that the high bit of each byte controls
+whether it should be 1&#8217;s or 0&#8217;s, and the next seven bits tell how many of each kind should
+follow, it would look like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="mb">%00110010</span> <span class="mi">50</span> <span class="mi">0</span><span class="err">'</span><span class="nv">s</span>
+<span class="mb">%11000110</span> <span class="mi">70</span> <span class="mi">1</span><span class="err">'</span><span class="nv">s</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That was that on compression. The above is a very simple compression algorithm and if you
+use it, you may end up with files bigger than they were from the beginning. I know file
+compression was a bit sketchy, but if you get the part of how files work, the compression
+part shouldn&#8217;t be that hard. Also, file compression might be covered more extensively later.
+So far, I know very little myself since I haven&#8217;t used it for anything. I have no idea how good
+file compression algorithms look or anything, so don&#8217;t ask. This is just the theoretical base.
+Study carefully, since I&#8217;m going to use a <code>.pi1</code> file for the font in the upcoming scroller.</p>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_of_the_workings_of_the_graphics_memory_and_minor_skills_in_branching.html">Of The Workings Of The Graphics Memory And Minor Skills In Branching</a> | ↑ Up: <a href="index.html">The Atari ST MC68000 Assembly Language Tutorials</a> | Next: <a href="_on_scrollers.html">On Scrollers</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1st edition (v0.84)<br>
+Last updated 2021-04-09 11:20:21 UTC
+</div>
+</div>
+</body>
+</html>

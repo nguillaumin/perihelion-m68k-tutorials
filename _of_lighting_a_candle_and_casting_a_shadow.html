@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<meta name="author" content="perihelion of poSTmortem">
+<title>The Atari ST MC68000 Assembly Language Tutorials</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
+<a href="https://github.com/nguillaumin/perihelion-m68k-tutorials"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+<style>.toc-current{font-weight: bold;} .toc-root{font-family: "Open Sans","DejaVu Sans",sans-serif;
+                       font-size: 0.9em;} #content{display: flex; flex-direction: column; flex: 1 1 auto;}
+             .nav-footer{text-align: center; margin-top: auto;}
+             .nav-footer > p > a {white-space: nowrap;}</style>
+</head>
+<body id="_of_lighting_a_candle_and_casting_a_shadow" class="book toc2 toc-left">
+<div id="header">
+<h1>The Atari ST MC68000 Assembly Language Tutorials</h1>
+<div class="details">
+<span id="author" class="author">perihelion of poSTmortem</span><br>
+<span id="revnumber">version 1st edition (v0.84),</span>
+<span id="revdate">August 28th 2004 | edited by bp</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<p><span class="toc-root"><a href="index.html">The Atari ST MC68000 Assembly Language Tutorials</a></span></p><ul class="sectlevel1">
+<li><a href="_foreword.html">Foreword</a>
+</li>
+<li><a href="_on_the_theory_behind_programming.html">On The Theory Behind Programming</a>
+</li>
+<li><a href="_of_the_workings_of_devpac_3_and_the_realisation_of_some_code.html">Of The Workings Of Devpac 3 And The Realisation Of Some Code</a>
+</li>
+<li><a href="_of_various_things_mystic_and_important_mainly_concerning_the_art_of_understanding_digits_and_performing_traps.html">Of Various Things Mystic And Important, Mainly Concerning The Art Of Understanding Digits And Performing Traps</a>
+</li>
+<li><a href="_of_the_ways_of_addressing_memory.html">Of The Ways Of Addressing Memory</a>
+</li>
+<li><a href="_of_the_workings_of_the_graphics_memory_and_minor_skills_in_branching.html">Of The Workings Of The Graphics Memory And Minor Skills In Branching</a>
+</li>
+<li><a href="_of_seeing_behind_the_curtain_of_an_execution_and_getting_intimate_with_files.html">Of Seeing Behind The Curtain Of An Execution And Getting Intimate With Files</a>
+</li>
+<li><a href="_on_scrollers.html">On Scrollers</a>
+</li>
+<li><a href="_of_scrolling_8_pixels_per_vbl_using_double_buffer.html">Of Scrolling 8 Pixels Per VBL Using Double Buffer</a>
+</li>
+<li><a href="_of_revealing_the_unseen_and_expanding_our_consciousness_without_the_use_of_illegal_drugs.html">Of Revealing The Unseen And Expanding Our Consciousness Without The Use Of Illegal Drugs</a>
+</li>
+<li><a href="_of_lighting_a_candle_and_casting_a_shadow.html"><span class="toc-current">Of Lighting A Candle (And Casting A Shadow)</span></a>
+</li>
+<li><a href="_of_making_the_mountain_move_to_mohammed.html">Of Making The Mountain Move To Mohammed</a>
+</li>
+<li><a href="_of_controlling_the_puppets.html">Of Controlling The Puppets</a>
+</li>
+<li><a href="_of_hearing_that_which_is_spoken.html">Of Hearing That Which Is Spoken</a>
+</li>
+<li><a href="_of_using_the_gramophone.html">Of Using The Gramophone</a>
+</li>
+<li><a href="_on_fading_to_black.html">On Fading To Black</a>
+</li>
+<li><a href="_appendixes.html">Appendixes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_of_lighting_a_candle_and_casting_a_shadow">Of Lighting A Candle (And Casting A Shadow)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>2002-06-23 (last edition of the initial revision)</em></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>I fear I will never find anyone<br>
+I know my greatest pain is yet to come<br>
+Will we find each other in the dark<br>
+My long lost love</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Nightwish<br>
+<cite>Beauty of the Beast</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>Hello again! I just got four Jaguar games from Aldebaran, he&#8217;s away over the midsummer
+feast so he was kind enough to leave me four Jaguar titles, since I own a Jaguar but have no
+games, heh &#8230;&#8203; I thought I&#8217;d wait until tomorrow before knocking myself out though, and do
+some good right now (or perhaps it&#8217;s because the TV is blocked). Ahh, I&#8217;ve gotten hold of the
+new Nightwish CD; Century Child, if you don&#8217;t own it already, make sure to do so! They play
+Finnish metal combined with real cute songs and the main singer is schooled in classic opera,
+so they have a real cool sound and are probably my favourite musical artists.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re up to tutorial number 10; which makes me very glad and proud over the work
+achieved. This had not been possible without the support of readers and other VIP&#8217;s. To
+celebrate the tenth "anniversary", I&#8217;m going to give you something special; a putpixel routine.
+Actually, that statement was almost meant as a kind of ironic, funny statement. I mean, not
+until tutorial number 10 do we learn how to code a putpixel routine, in the PC&#8217;s MCGA mode
+for example, this is something you hardly have to learn, it&#8217;s implied. However, as anyone who
+knows this much about programming the ST will know, coding putpixel for the ST is a pain in
+the butt.</p>
+</div>
+<div class="paragraph">
+<p>The putpixel will hopefully be a prequel to a tutorial on sprites. Sprites, by the way, are
+anything that moves on the screen, such as a little spaceship, a funny rabbit or just a
+bouncing ball. A putpixel routine is a routine designed to put a single pixel on the screen, so
+on the ST, it lights a single dot in one of 16 colours. To achieve this, four bits have to be
+changed in four different places in memory, and nothing else must be changed in the screen
+memory, else too much will be changed.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s first see how we will know which pixel to change. We want to be able to provide
+information in coordinates, like pixel 160,100, which is about the middle of the screen. The
+ST would treat any such coordinates with a big question mark, so we have to find a way to
+translate the coordinates. All pixels come after one another in the screen memory, starting
+with the top left one, and ending with the bottom right.</p>
+</div>
+<div class="paragraph">
+<p>This means that X value is of course worth 1 position, since pixel 2,0 is the third pixel on
+screen. Each Y value is worth as much as the number of X coordinates on one scan line, in
+the case of ST low resolution; 320. So if we have the coordinate 160,100, that would be the
+160 + 100 × 320 = 32161th pixel on screen (one extra is added to the value since we start
+counting from 0). The total number of pixels on screen is 320 × 200 = 64000 pixels, which is
+about twice as much as 32160, so the formula seems to work. However, this won&#8217;t work on a
+ST, because we can&#8217;t simply count pixels that easily.</p>
+</div>
+<div class="paragraph">
+<p>The information for a single pixel is contained in four bits in four consecutive words, one bit
+in each word. So, instead what we need to know is at what word the first bit is, and which bit
+exactly it is we want to deal with. There are 16 bits in each word, by dividing our X value with
+16, we will get the number of word clusters to count in the result, and the exact bit in the
+remainder.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s why: suppose we want the 19th pixel, this would mean jumping over the first word
+cluster, which contains information for 16 pixels, and then manipulate the third most
+significant bit in the next word cluster. 19 / 16 = 1.1875, which means we get the result 1
+and the remainder 16 × 0.1875 = 3, it works! So, given the ST&#8217;s screen memory
+configuration, how exactly will we treat coordinate 160,100?</p>
+</div>
+<div class="paragraph">
+<p>We assume the screen memory points to the start of the screen memory. First, the Y
+coordinate, which is the simplest; each scan line is 160 bytes, so multiply the Y coordinate
+with 160 and add it to the screen address. Then divide the X value with 16, multiply the
+result with 8 and add to the screen memory. Why 8? Because each word cluster that we are
+to jump over is 8 bytes; two bytes to a word and four consecutive words. Now, the screen
+memory points to the first word of the four consecutive words we need to alter, in each word
+we want to alter one bit. The exact bit is obtained from the remainder of the X division. There
+may be other intricate methods, but this one is robust, straightforward and good for learning.
+Supposing <code>a0</code> points to the beginning of screen memory, <code>d0</code> holds the X-coordinate and <code>d1</code>
+holds the Y-coordinate, this is how it&#8217;s done.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">160</span><span class="p">,</span> <span class="nb">d1</span>                 <span class="c1">; 160 bytes to a scan line</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add y value to screen memory</span>
+                <span class="k">divu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">16</span><span class="p">,</span> <span class="nb">d0</span>                  <span class="c1">; number of clusters in low, bit in high</span>
+                <span class="k">clr</span><span class="nd">.l </span>  <span class="nb">d1</span>                       <span class="c1">; clear d1</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; move cluster part to d1</span>
+                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">8</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; 8 bytes to a cluster</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add the cluster part to screen memory</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d0</span>                       <span class="c1">; clear out the cluster value</span>
+                <span class="k">swap</span>    <span class="nb">d0</span>                       <span class="c1">; put the bit to alter in low part of d0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is some magic worked here with high and low parts of the data registers. With high
+and low part, we mean the two first, and two last bytes of the register, thus the high part is
+the first 16 bits, and the low part the last 16 bits (reading from left to right). By performing
+instructions with word size, you only affect the lower part of a register, and leave the higher
+part unchanged.</p>
+</div>
+<div class="paragraph">
+<p>The <code>divu</code> instruction, leaves the result in the low part and the remainder in the high part of
+the register. After the <code>divu</code>, the <code>move.w</code> will only move out the lower part, the cluster part, of
+<code>d0</code>. Following is a multiplication on the cluster value, and an addition to screen memory.
+Finally, clear out the cluster part of <code>d0</code>, and a swap instruction. The swap instructions flips the
+high and low part of a register, so now <code>d0</code> neatly holds only the value for the bit to be
+changed, and <code>a0</code> points to the correct place.</p>
+</div>
+<div class="paragraph">
+<p>So, now that we know where to change, how do we know what to change? We will have a
+value between 0 and 15, that is supposed to be put in those four bits in the screen memory
+(the colour of the pixel). We can&#8217;t just move in the data, we could devise some plan with <code>bset</code>
+and <code>bclr</code> instructions, but that may be clumsy and will probably involve branches for testing,
+which is slow. Instead, we will use our knowledge of masks and Boolean algebra to solve the
+problem.</p>
+</div>
+<div class="paragraph">
+<p>By putting the colour data in the high part of a register, we can then rotate the least
+significant bit of the colour into the lower part, and then do a shift on only the lower part of
+the register, to put the colour bit in the correct place; mask prepared! Suppose we have the
+colour value in <code>d2</code>, and the number of bits to change in <code>d0</code>, obtained from the example
+above, this is how it works.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">swap</span>    <span class="nb">d2</span>                       <span class="c1">; put colour value in high part</span>
+                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">1</span><span class="p">,</span> <span class="nb">d2</span>                   <span class="c1">; put one bit of colour in shiftable position</span>
+                <span class="k">lsr</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span>                   <span class="c1">; shift by number in d0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Memory will perhaps look something like this, d1 = 5.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">High part</th>
+<th class="tableblock halign-center valign-top">Low part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000000</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000001011</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">swap</span>    <span class="nb">d2</span></code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">High part</th>
+<th class="tableblock halign-center valign-top">Low part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000001011</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000000</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">1</span><span class="p">,</span> <span class="nb">d2</span></code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">High part</th>
+<th class="tableblock halign-center valign-top">Low part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000101</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%1000000000000000</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">lsr</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span></code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">High part</th>
+<th class="tableblock halign-center valign-top">Low part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000101</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000010000000000</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Ah, now the lower part of <code>d2</code> will hold a terrific mask, we have one bit set, the one bit that
+we want to alter in screen memory, a simple ORing of the mask will make sure that the bit is
+set in screen memory, then we just add two to the screen pointer, and repeat the process.
+Wrong! Problem is, depending on our value, we want to either clear or set the bit, as you can
+see, on the third run through, the bit should be cleared, not set (the third bit counting from
+the left in the colour value is 0). If we just OR in the mask, and the bit we want to clear in
+the screen memory, is set to begin with, we will end up with a set bit where we want a
+cleared bit. Buh, that sounded awful, example! This is how it will look the third run through</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">High part</th>
+<th class="tableblock halign-center valign-top">Low part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000001</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%0000000000000000</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>note how the fifth most significant bit in the lower part is not set.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Screen memory</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%1111111111111111</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>By ORing <code>d2</code> with the screen memory, we won&#8217;t be clearing out the fifth most significant bit in
+the screen memory, although we need it to be cleared in order for the pixel to have the
+correct value. So, before ORing in our mask, we need to make sure the bit is cleared. This is
+done by ANDing in a mask with all bits set except the one bit we want to change. Mask
+preparation looks like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mb">%0111111111111111</span><span class="p">,</span> <span class="nb">d1</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span></code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">d1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%11111011111111111</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>ror</code> instruction, for <strong>RO</strong>tate<strong>R</strong>ight, will rotate the register, making sure that whatever goes
+out the right (or left) will then come in to the left. Thus, if the least significant bit is 0, a 0 will
+me moved in the most significant bit, if it&#8217;s a 1, a 1 will be moved in. The difference between
+a logical shift and a rotate, is that a logical shift will move in 0&#8217;s, while rotate will move in
+whatever went out. Examine <a href="appendixes/m68k-execution-times.txt">Motorola 68000 Instruction Execution Times</a> if
+you wish to further your knowledge on this, there are also arithmetic shifts, but I don&#8217;t use them
+here. Now, by first ANDing in the clear mask, we can then safely or in our pixel mask, like so.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">swap</span>    <span class="nb">d2</span>                       <span class="c1">; colour in the high part of d2</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mb">%0111111111111111</span><span class="p">,</span> <span class="nb">d1</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; clear mask prepared</span>
+
+                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">1</span><span class="p">,</span>                      <span class="c1">; d2 shift in the next colour bit</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span>                   <span class="c1">; shift colour bit into position</span>
+                <span class="k">and</span><span class="nd">.w </span>  <span class="nb">d1</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span>                 <span class="c1">; prepare with mask (bclr)</span>
+                <span class="k">or</span><span class="nd">.w </span>   <span class="nb">d2</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span><span class="o">+</span>                <span class="c1">; or in the colour</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d2</span>                       <span class="c1">; clear the old used bit</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then just repeat that over and over, or rather, three times more. The only thing not covered
+before is the last line, clearing out the old used bit, without this, remnants might be left on
+the next time around. This is one way of putting a pixel to screen. Bit planes make a putpixel
+routine so incredibly slow and clumsy. This though, is just a generic putpixel routine, a pixel
+routine designed for a specific purpose might be much faster, involving only one bit plane
+perhaps. You don&#8217;t have to mess around with all four bit planes every time, say you only
+want to use four colours for your stuff, then just leave two bit planes alone, since they aren&#8217;t
+needed, this will speed up things. This is the entire putpixel routine.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="nl">putpixel:</span>
+                <span class="c1">; a0 screen address</span>
+                <span class="c1">; d0 X coordinate</span>
+                <span class="c1">; d1Y coordinate</span>
+                <span class="c1">; d2 colour</span>
+
+                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">160</span><span class="p">,</span> <span class="nb">d1</span>                 <span class="c1">; 160 bytes to a scan line</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add y value to screen memory</span>
+                <span class="k">divu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">16</span><span class="p">,</span> <span class="nb">d0</span>                  <span class="c1">; number of clusters in low, bit in high</span>
+                <span class="k">clr</span><span class="nd">.l </span>  <span class="nb">d1</span>                       <span class="c1">; clear d1</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; move cluster part to d1</span>
+                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">8</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; 8 bytes to a cluster</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add the cluster part to screen memory</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d0</span>                       <span class="c1">; clear out the cluster value</span>
+                <span class="k">swap</span>    <span class="nb">d0</span>                       <span class="c1">; put the bit to alter in low part of d0</span>
+
+                <span class="c1">; now a0 points to the first word of the bitplane to use</span>
+                <span class="c1">; d0.w holds the bit number to be manipulated in the word</span>
+
+                <span class="k">swap</span>    <span class="nb">d2</span>                       <span class="c1">; colour in the high part of d2</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mb">%0111111111111111</span><span class="p">,</span> <span class="nb">d1</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; clear mask prepared</span>
+
+                <span class="kr">rept</span>    <span class="mi">4</span>                        <span class="c1">; do this 4 times</span>
+                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">1</span><span class="p">,</span> <span class="nb">d2</span>                   <span class="c1">; shift in the next colour bit</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span>                   <span class="c1">; shift colour bit into position</span>
+                <span class="k">and</span><span class="nd">.w </span>  <span class="nb">d1</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span>                 <span class="c1">; prepare with mask (bclr)</span>
+                <span class="k">or</span><span class="nd">.w </span>   <span class="nb">d2</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span><span class="o">+</span>                <span class="c1">; or in the colour</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d2</span>                       <span class="c1">; clear the old used bit</span>
+                <span class="kr">endr</span>
+
+                <span class="nv">rte</span> <span class="nv">return</span> <span class="nv">form</span> <span class="nv">putpixel</span>
+
+                <span class="c1">; end putpixel</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That was that. A nice putpixel routine to use for our convenience, slow as hell because of two
+multiplications and one division. Because this is a tutorial, and I want to push against
+practical use, I&#8217;ve also written a stupid little program that puts 50 pixels a second on the
+screen, like a screen saver. However, that program also includes some nice tricks so read on!</p>
+</div>
+<div class="paragraph">
+<p>The ST has a number of system variables, they are found at very low addresses, starting at
+<code>$400</code> and ending at <code>$516</code>. Like the name suggests, these variables contain lots of special
+information on the system, and they can provide quite the shortcut to finding out some
+information. For example, <code>$44e</code>, called <code>_v_bas_ad</code>, is a long word containing a pointer to the
+screen memory (the logical screen memory). If you just want a quick and dirty program, like
+this one, and want to find out the screen address without traps, or hooking it up yourself,
+simply read the value here.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">move</span><span class="nd">.l </span> <span class="mh">$44e</span><span class="p">,</span> <span class="nb">a0</span>                 <span class="c1">; a0 points to screen memory</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are some other useful system variables, which will be presented when the need arises.
+If we want to have a screen saver like program, we want to be able to output random pixels,
+right? So we need a way to generate a random number. Random numbers are usually
+obtained from reading the system clock, and then applying some algorithm to the obtained
+value. We don&#8217;t want to mess with that, especially not when there is a very nice trap that will
+do the job nicely for us. Trap number 17 in XBIOS will generate a 24-bit random number and
+put it in <code>d0</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>               <span class="c1">; trap number 17, random</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>                      <span class="c1">; call XBIOS</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                   <span class="c1">; clean up stack</span>
+                <span class="c1">; random number in d0</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Well, a random number of 24-bits is a number between 0 and 16777216. We want values in
+the range of 0 to a maximum of 319; 0-15 for the colour, 0-319 for the X coordinate and 0-
+199 for the Y coordinate. So how can we get the random number "down to our level", so to
+speak? We could put the random call in a loop, and in the end of each loop check the random
+value, and if it is to big, just repeat the loop. While this would work, it would be so incredibly
+slow because the odds of the value falling within parameters are extremely small. However,
+by first lessening the value, we gain tremendous time.</p>
+</div>
+<div class="paragraph">
+<p>As we so well know, the colour value consists of 4 bits. By ANDing the random value with
+<code>%1111</code>, we effectively set all bits to 0 except the first four (which may be 0 or 1, depending
+on the initial value). Thus, our initial random value of 24-bits has been reduced to a 4-bit
+value, making it perfect for our needs. The X and Y coordinates however, are a bit different,
+since their representation does not consist of a complete set of bits (numbers that do so are
+the ones immediately before the powers of 2, i.e. 1, 3, 7, 15, 31, 63, 127, 255, etc). We can&#8217;t
+simply mask off the X co-ordinate&#8217;s unnecessary bits like we did the colour, rather we have to
+keep one bit more than what is needed.</p>
+</div>
+<div class="paragraph">
+<p>The value 319 uses 9 bits, so we will have to AND the X coordinate with <code>%111111111</code>, but
+<code>%111111111</code> = 511, so after masking off the bits in our random value, we&#8217;ll have a number
+between 0 and 511. Now, we must use a loop to check the value, and make a new random
+number if it should prove to be over 319. The odds for the value of being within parameters
+are greatly increased though.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k"><span class="nl">get_x</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                   <span class="c1">; get random number</span>
+                <span class="k">and</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mb">%111111111</span><span class="p">,</span> <span class="nb">d0</span>          <span class="c1">; make it maximum 511</span>
+                <span class="k">cmp</span>     <span class="nd">#</span><span class="mi">319</span><span class="p">,</span> <span class="nb">d0</span>
+                <span class="k">bgt</span>     <span class="nv">get_x</span>                    <span class="c1">; loop until d0 &lt; 320</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The instruction bgt will branch if the value compared is greater than. This loop then, will loop
+until the value in <code>d0</code> is not greater than 319. The Y coordinate is obtained by doing much the
+same thing, but we only need to AND with 8 bits, because the Y coordinate should be &lt; 200,
+and 8 bits make up 255. There, all the theory we need, this is the complete source of the
+program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">jsr</span>     <span class="nv">initialise</span>
+
+                <span class="k">move</span><span class="nd">.l </span> <span class="mh">$44e</span><span class="p">,</span> <span class="nb">a0</span>                  <span class="c1">; a0 poins to screen memory</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">0</span><span class="p">,</span> <span class="mh">$ff8240</span>               <span class="c1">; black background</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">7999</span><span class="p">,</span> <span class="nb">d0</span>
+<span class="nl">clear</span>
+                <span class="k">clr</span><span class="nd">.l </span>  <span class="p">(</span><span class="nb">a0</span><span class="p">)</span>
+                <span class="k">dbf</span>     <span class="nb">d0</span><span class="p">,</span> <span class="nv">clear</span>                 <span class="c1">; clears screen to colour 0</span>
+
+<span class="nl">main</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">37</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                    <span class="c1">; wait retrace</span>
+  
+<span class="nl">get_x</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                    <span class="c1">; get random number</span>
+                <span class="k">and</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mb">%111111111</span><span class="p">,</span> <span class="nb">d0</span>           <span class="c1">; make it maximum 511</span>
+                <span class="k">cmp</span>     <span class="nd">#</span><span class="mi">319</span><span class="p">,</span> <span class="nb">d0</span>      
+                <span class="k">bgt</span>     <span class="nv">get_x</span>                     <span class="c1">; loop until d0 &lt; 320</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d7</span>                    <span class="c1">; store x coordinate</span>
+
+<span class="nl">get_y</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                    <span class="c1">; get random number</span>
+                <span class="k">and</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mb">%11111111</span><span class="p">,</span> <span class="nb">d0</span>            <span class="c1">; make it maximum 255</span>
+                <span class="k">cmp</span>     <span class="nd">#</span><span class="mi">199</span><span class="p">,</span> <span class="nb">d0</span>                  <span class="c1">; loop until d0 &lt; 200</span>
+                <span class="k">bgt</span>     <span class="nv">get_y</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d6</span>                    <span class="c1">; store y coordinate</span>
+  
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>
+                <span class="k">trap</span>    <span class="nd">#</span><span class="mi">14</span>
+                <span class="k">addq</span><span class="nd">.l </span> <span class="nd">#</span><span class="mi">2</span><span class="p">,</span> <span class="nb">a7</span>                    <span class="c1">; get random number</span>
+                <span class="k">and</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mb">%1111</span><span class="p">,</span> <span class="nb">d0</span>                <span class="c1">; make it maximum 15</span>
+                <span class="k">move</span><span class="nd">.b </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span>                    <span class="c1">; put colour number in d2</span>
+                                
+                <span class="k">move</span><span class="nd">.l </span> <span class="nb">d7</span><span class="p">,</span> <span class="nb">d0</span>                    <span class="c1">; put x coordinate in d0</span>
+                <span class="k">move</span><span class="nd">.l </span> <span class="nb">d6</span><span class="p">,</span> <span class="nb">d1</span>                    <span class="c1">; put y coordinate in d1</span>
+              
+                <span class="k">move</span><span class="nd">.l </span> <span class="mh">$44e</span><span class="p">,</span> <span class="nb">a0</span>                  <span class="c1">; a0 points to screen memory</span>
+                <span class="k">jsr</span>     <span class="nv">putpixel</span>                  <span class="c1">; put pixel on screen</span>
+              
+                <span class="k">cmp</span><span class="nd">.b </span>  <span class="nd">#</span><span class="mh">$39</span><span class="p">,</span> <span class="mh">$fffc02</span>             <span class="c1">; space pressed?</span>
+                <span class="k">bne</span>     <span class="kr">main</span>                      <span class="c1">; if not, repeat main</span>
+                
+                <span class="k">jsr</span>     <span class="nv">restore</span>
+                
+                <span class="k">clr</span><span class="nd">.l </span> <span class="o">-</span><span class="p">(</span><span class="nb">a7</span><span class="p">)</span>                      <span class="c1">; clean</span>
+                <span class="k">trap</span>   <span class="nd">#</span><span class="mi">1</span>                         <span class="c1">; exit</span>
+
+
+<span class="nl">putpixel:</span>
+<span class="c1">; putpixel routine</span>
+<span class="c1">; a0 screen adress</span>
+<span class="c1">; d0 x-coordinate</span>
+<span class="c1">; d1 y-coordinate</span>
+<span class="c1">; d2 colour</span>
+                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">160</span><span class="p">,</span> <span class="nb">d1</span>                  <span class="c1">; 160 bytes to a scan line</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                    <span class="c1">; add y value to screen memory</span>
+                <span class="k">divu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">16</span><span class="p">,</span> <span class="nb">d0</span>                   <span class="c1">; number of clusters in low, bit in high</span>
+                <span class="k">clr</span><span class="nd">.l </span>  <span class="nb">d1</span>                        <span class="c1">; clear d1</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                    <span class="c1">; move cluster part to d1</span>
+                <span class="k">mulu</span><span class="nd">.w </span> <span class="nd">#</span><span class="mi">8</span><span class="p">,</span> <span class="nb">d1</span>                    <span class="c1">; 8 bytes to a cluster</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                    <span class="c1">; add cluster part to screen memory</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d0</span>                        <span class="c1">; clear out the cluster value</span>
+                <span class="k">swap</span>    <span class="nb">d0</span>                        <span class="c1">; bit to alter in low part of d0</span>
+
+<span class="c1">; now a0 points to the first word of the bitplane to use</span>
+<span class="c1">; d0.w  holds the bit number to be manipulated in the word  </span>
+
+                <span class="k">swap</span>    <span class="nb">d2</span>                        <span class="c1">; colour in the high part of d2</span>
+                <span class="k">move</span><span class="nd">.w </span> <span class="nd">#</span><span class="mb">%0111111111111111</span><span class="p">,</span> <span class="nb">d1</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d1</span>                    <span class="c1">; clear mask prepared</span>
+              
+                <span class="kr">rept</span>    <span class="mi">4</span>                         <span class="c1">; do this 4 times</span>
+                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">1</span><span class="p">,</span> <span class="nb">d2</span>                    <span class="c1">; shift in the next colour bit</span>
+                <span class="k">ror</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">d2</span>                    <span class="c1">; shift colour bit into position</span>
+                <span class="k">and</span><span class="nd">.w </span>  <span class="nb">d1</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span>                  <span class="c1">; prepare with mask (bclr)</span>
+                <span class="k">or</span><span class="nd">.w </span>   <span class="nb">d2</span><span class="p">,</span> <span class="p">(</span><span class="nb">a0</span><span class="p">)</span><span class="o">+</span>                 <span class="c1">; or in the colour</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d2</span>                        <span class="c1">; clear the old used bit</span>
+                <span class="kr">endr</span>
+                  
+                <span class="k">rts</span>
+<span class="c1">; end putpixel</span>
+
+                <span class="kr">include</span> <span class="nv">initlib</span><span class="p">.</span><span class="nv">s</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/tutorial-10-screenshot.png" alt="tutorial 10 screenshot">
+</div>
+<div class="title">Figure 11. Pixels</div>
+</div>
+<div class="paragraph">
+<p>Yes, first a normal initialisation, then the neat trick of putting the screen address in a0,
+followed up by putting the background black and clearing the screen. Then, a main routine,
+the question here is why I didn&#8217;t I use the <code>$70</code> as described in tutorial 9. The reason is a bit
+farfetched, but valid. Because of the random loops, there is a theoretical possibility of the
+main routine taking longer than 1/50th of a second, it&#8217;s virtually impossible, but it could
+happen. If this were to happen, the $70 vector would be called while the previous one were
+still being executed, resulting in a crash. With the method I use here, however, there is no
+danger of a crash.</p>
+</div>
+<div class="paragraph">
+<p>Obtaining the X coordinate, as described above, only new thing is storing the coordinate in
+<code>d7</code>. This is because the coming random trap for the Y coordinate will destroy everything in
+register <code>d0</code>, and then some, register <code>d7</code> however, is safe. Same goes for the Y coordinate.
+Finally, the colour value is obtained, and moved over to <code>d2</code>, then the X and Y coordinates are
+moved into their respective registers. These registers could be anything, or a variable or
+whatever storage possibility, but the putpixel routine is designed to have the X coordinate in
+<code>d0</code> and the Y coordinate in <code>d1</code>, so this is how it&#8217;s supposed to be. After the screen address
+has been put in <code>a0</code>, all is set for the putpixel call.</p>
+</div>
+<div class="paragraph">
+<p>The putpixel routine is exactly as described above, so nothing new there. Signing off with a
+check for a pressed spacebar, and that concludes the program. Note how I put the putpixel
+routine in its own subroutine, instead of including it in the main program, which could also
+have been done. This results in tidier code, the downside being that it takes more time to
+execute, but time is no issue here.</p>
+</div>
+<div class="paragraph">
+<p>Speaking of time, I actually think that I&#8217;ll fill up some space here with a bit on optimisation,
+something that will have to come one day or another anyway. There are two multiplications
+and one division in the putpixel routine, horrible. These can be replaced with shift
+instructions, but it&#8217;s a bit tricky. Each shift either doubles or halves the value in the register.
+So how do we do a multiplication of 160 and a division by 16, where we also keep the
+remainder?</p>
+</div>
+<div class="paragraph">
+<p>First, the Y part; here, we want to have a result equalling <code>d1</code> × 160. 160 is not a value you
+may shift by, since all shift will produce multiplication results of 2, 4, 8, 16, 32, 64, 128, 256
+and so on. However, 128 + 32 = 160, the value we want to multiply with, and when things
+come to multiplication, we are allowed to split the multiplication in two and add the result;
+<code>d1</code> × 160 = <code>d1</code> × 32 + <code>d2</code> × 128. All we have to do is copy our Y coordinate into another register,
+shift one register with 5 (multiplication of 32), shift the other with 7 (multiplication of 128)
+and add the results together.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">move</span><span class="nd">.w </span> <span class="nb">d1</span><span class="p">,</span> <span class="nb">d3</span>                   <span class="c1">; copy Y coordinate</span>
+                <span class="k">lsl</span><span class="nd">.w </span>  <span class="nd">#</span><span class="mi">7</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; mulu #128,d1</span>
+                <span class="k">lsl</span><span class="nd">.w </span>  <span class="nd">#</span><span class="mi">5</span><span class="p">,</span> <span class="nb">d3</span>                   <span class="c1">; mulu #32,d3</span>
+                <span class="k">add</span><span class="nd">.w </span>  <span class="nb">d3</span><span class="p">,</span> <span class="nb">d1</span>                   <span class="c1">; add results together</span>
+                <span class="k">add</span><span class="nd">.l </span>  <span class="nb">d1</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add result to screen address</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the word size used in all operations. There may still be garbage in the upper part of <code>d3</code>,
+but this is never touched in any of the operations. Since the maximum value we will handle is
+199 × 160 = 31840 is less than the maximum for a word size, which is 2<sup>16</sup> = 65536, it&#8217;s ok to
+only use word size instructions, it also saves time. Our mulu instruction would take a
+maximum of 70 clock cycles, but in this case I think it&#8217;s 42. The technique of shifting takes</p>
+</div>
+<div class="paragraph">
+<p>12 + 6 + 2 × 7 + 6 + 2 × 5 + 8 = 58</p>
+</div>
+<div class="paragraph">
+<p>Heh, seems we wasted time rather than saving. Let that be an important lesson, sometimes
+the job&#8217;s just not worth doing. ☺</p>
+</div>
+<div class="paragraph">
+<p>So now the X part, first, put the thing in the upper part of <code>d0</code> with a swap. Now, with a right
+shift of 4, we will effectively divide the number by 16, which is what we want to achieve, the
+result will be in the upper part, and the remainder will be in the highest bits in the lower part.
+Now, what we need to do is simply to put the remainder down in the lowest bits in
+<code>d0</code>, so we right shift by 12. The reason for right shifting by 12 is that the remainder takes up
+a maximum of 4 bits (remainder maximum is 15, <code>%1111</code>), and 12 + 4 = 16 which is the
+number of bits in the lower part of a data register. Unfortunately though, you can&#8217;t shift by
+12 when shifting with a number, so we&#8217;ll just have to divide the shift in one 8 and one 4 part,
+8 being the highest number you may shift by.</p>
+</div>
+<div class="paragraph">
+<p>Swap down the result in the lower part, and shift it left by 3 in order to multiply with 8. We
+make sure to keep the operation word size in order not to affect the remainder in the upper
+part. Then, add the result to the address register, but only use a move with word size, in
+order to only add the multiplied result, and leave the remainder well alone. Lastly, a clear out
+of the result part and a swap to put everything right for the next part of the putpixel.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">                <span class="k">swap</span>    <span class="nb">d0</span>                       <span class="c1">; put in upper part</span>
+                <span class="k">lsr</span><span class="nd">.l </span>  <span class="nd">#</span><span class="mi">4</span><span class="p">,</span> <span class="nb">d0</span>                   <span class="c1">; divide by 16</span>
+                <span class="k">lsr</span><span class="nd">.w </span>  <span class="nd">#</span><span class="mi">8</span><span class="p">,</span> <span class="nb">d0</span>                   <span class="c1">; shift down remainder ...</span>
+                <span class="k">lsr</span><span class="nd">.w </span>  <span class="nd">#</span><span class="mi">4</span><span class="p">,</span> <span class="nb">d0</span>                   <span class="c1">; ... by 12 bits total</span>
+                <span class="k">swap</span>    <span class="nb">d0</span>                       <span class="c1">; result in lower part</span>
+                <span class="k">lsl</span><span class="nd">.w </span>  <span class="nd">#</span><span class="mi">3</span><span class="p">,</span> <span class="nb">d0</span>                   <span class="c1">; multiply with 8</span>
+                <span class="k">add</span><span class="nd">.w </span>  <span class="nb">d0</span><span class="p">,</span> <span class="nb">a0</span>                   <span class="c1">; add result to screen address</span>
+                <span class="k">clr</span><span class="nd">.w </span>  <span class="nb">d0</span>                       <span class="c1">; clear out result</span>
+                <span class="k">swap</span>    <span class="nb">d0</span>                       <span class="c1">; put remainder in lower part</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That was that, now let&#8217;s see if this optimisation did us some good. Unoptimized takes about</p>
+</div>
+<div class="paragraph">
+<p>140 + 6 + 4 + 40 + 12 + 4 + 4 = 210</p>
+</div>
+<div class="paragraph">
+<p>The division is an approximation. Also, I don&#8217;t think we really need to move some data to <code>d1</code>
+to manipulate it, so the unoptimized could do some optimization too, but that&#8217;s not too
+important. Now let&#8217;s see what the shift-optimized part will take</p>
+</div>
+<div class="paragraph">
+<p>4 + 8 + 4 × 2 + 6 + 8 × 2 + 4 + 6 + 3 × 2 + 8 + 4 + 4 = 88</p>
+</div>
+<div class="paragraph">
+<p>Even though I&#8217;m a bit unsure of some values here, it&#8217;s obviously quite a save in any case.
+That was a little taste on how to optimize easy, just replace multiplications and divisions with
+shifts, sometimes quite a saving, but not always.</p>
+</div>
+</div>
+</div>
+<div class="paragraph nav-footer">
+<p>← Previous: <a href="_of_revealing_the_unseen_and_expanding_our_consciousness_without_the_use_of_illegal_drugs.html">Of Revealing The Unseen And Expanding Our Consciousness Without The Use Of Illegal Drugs</a> | ↑ Up: <a href="index.html">The Atari ST MC68000 Assembly Language Tutorials</a> | Next: <a href="_of_making_the_mountain_move_to_mohammed.html">Of Making The Mountain Move To Mohammed</a> →</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1st edition (v0.84)<br>
+Last updated 2021-04-09 11:20:21 UTC
+</div>
+</div>
+</body>
+</html>
