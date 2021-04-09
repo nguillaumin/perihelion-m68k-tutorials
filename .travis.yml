@@ -16,6 +16,9 @@ script:
     - rm -f *.adoc
     # Cleanup compiled files - Sources must be preserved as they are linked to from the tutorials
     - docker run --rm -v $PWD/src:/data -w /data nguillaumin/vasm make clean
+    # Disable Jekyll processing as it ignores files starting with an underscore,
+    # which AsciiDoctor generates
+    - touch .nojekyll
 
 deploy:
     provider: pages
