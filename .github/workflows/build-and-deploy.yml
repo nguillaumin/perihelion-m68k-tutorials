@@ -1,0 +1,58 @@
+name: Build
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Compile
+        uses: addnab/docker-run-action@v3
+        with:
+          image: nguillaumin/vasm
+          options: --rm -v ${{ github.workspace }}/src:/data -w /data
+          run: make
+
+      - name: Generate HTML
+        uses: addnab/docker-run-action@v3
+        with:
+          image: asciidoctor/docker-asciidoctor
+          options: --rm -v ${{ github.workspace }}:/documents
+          run: bash -c "gem install asciidoctor-multipage && asciidoctor -a source-highlighter=rouge -a docinfo1 -r asciidoctor-multipage -b multipage_html5 index.adoc"
+
+      - name: Generate ePub
+        uses: addnab/docker-run-action@v3
+        with:
+          image: asciidoctor/docker-asciidoctor
+          options: --rm -v ${{ github.workspace }}:/documents
+          run: bash -c "asciidoctor-epub3 -a source-highlighter=rouge epub.adoc -o perihelion-m68k-tutorials.epub"
+
+      - name: Cleanup
+        run: |
+          rm -Rf .github
+          rm -f .gitignore
+          rm -f *.adoc
+
+      - name: Cleanup compiked files
+        uses: addnab/docker-run-action@v3
+        with:
+          image: nguillaumin/vasm
+          options: --rm -v ${{ github.workspace }}/src:/data -w /data
+          run: make clean
+
+      - name: Prepare GitHub pages
+        run: |
+          touch .nojekyll
+          find
+
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
