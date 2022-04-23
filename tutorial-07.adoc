@@ -283,4 +283,61 @@ where he begins his stuff. That is that from me right now. Upon request from mOd
 Checkpoint, the next tutorial will probably be on timers, I think. This means we'll be able to
 remove the bottom and top borders, cool stuff!
 
+NOTE: Funnily enough James Ingram reached out in April 2022 and says the following:
 
+****
+So I wanted an old skool Atari font to do something,and google threw me this:
+https://nguillaumin.github.io/perihelion-m68k-tutorials/_on_scrollers.html
+
+Haha! So now I am going to use my own font, which I created myself years ago :)
+
+I had a look at your code and I thought you might like a couple of tips, if you're still interested in 68000.
+
+If you look at the instruction timings, it is always faster to rotate than to multiple. So instead of 
+[source]
+----
+   mulu #8
+----
+I would always
+[source]
+----
+   lsl #3
+----
+
+Adding "q" to the end of some instructions makes them faster to execute.:
+[source]
+----
+  addq #8
+----
+executes faster than 
+[source]
+----
+  add #8
+----
+
+That's because the addq command includes the number "8" in the same word as the instruction, whereas the "add"
+instruction is followed by a word which contains the number to add.
+
+The `addq` only works with numbers up to 16 (I think).
+
+Your `move 2(a2)+` instructions can be replaced with a single `movem`. And since you want to do the whole row, you don't
+need to worry about limiting your movems to the width of a letter. Just
+[source]
+----
+	movem.l	(a5)+,d0-7/a0-4
+	movem.l	d0-7/a0-4,coun(a6)
+----
+as many times as you need.
+
+Finally, I would pre-process the font and the scrolltext. The font would be re-arranged in memory so that I could grab
+a character with a set of `movem`s and then `movep`` it onto the screen.
+
+That's all in my tutorial, if you want the details :D
+
+Finally, if you fancy a challenge, I found a way to scroll the *entire screen* 8 bits per frame. It's also in my
+tutorial, which you already have :)
+
+Cheers, and thanks again!
+
+James Ingram
+****
