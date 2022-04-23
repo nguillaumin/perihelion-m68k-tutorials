@@ -1208,6 +1208,101 @@ where he begins his stuff. That is that from me right now. Upon request from mOd
 Checkpoint, the next tutorial will probably be on timers, I think. This means we&#8217;ll be able to
 remove the bottom and top borders, cool stuff!</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Funnily enough James Ingram reached out in April 2022 and says the following:
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>So I wanted an old skool Atari font to do something,and google threw me this:
+<a href="https://nguillaumin.github.io/perihelion-m68k-tutorials/_on_scrollers.html" class="bare">https://nguillaumin.github.io/perihelion-m68k-tutorials/_on_scrollers.html</a></p>
+</div>
+<div class="paragraph">
+<p>Haha! So now I am going to use my own font, which I created myself years ago :)</p>
+</div>
+<div class="paragraph">
+<p>I had a look at your code and I thought you might like a couple of tips, if you&#8217;re still interested in 68000.</p>
+</div>
+<div class="paragraph">
+<p>If you look at the instruction timings, it is always faster to rotate than to multiple. So instead of</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">   <span class="k">mulu</span> <span class="nd">#</span><span class="mi">8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I would always</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">   <span class="k">lsl</span> <span class="nd">#</span><span class="mi">3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding "q" to the end of some instructions makes them faster to execute.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">  <span class="k">addq</span> <span class="nd">#</span><span class="mi">8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>executes faster than</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">  <span class="k">add</span> <span class="nd">#</span><span class="mi">8</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s because the addq command includes the number "8" in the same word as the instruction, whereas the "add"
+instruction is followed by a word which contains the number to add.</p>
+</div>
+<div class="paragraph">
+<p>The <code>addq</code> only works with numbers up to 16 (I think).</p>
+</div>
+<div class="paragraph">
+<p>Your <code>move 2(a2)+</code> instructions can be replaced with a single <code>movem</code>. And since you want to do the whole row, you don&#8217;t
+need to worry about limiting your movems to the width of a letter. Just</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="m68k">	<span class="k">movem</span><span class="nd">.l	</span><span class="p">(</span><span class="nb">a5</span><span class="p">)</span><span class="o">+</span><span class="p">,</span><span class="nb">d0</span><span class="o">-</span><span class="mi">7</span><span class="o">/</span><span class="nb">a0</span><span class="o">-</span><span class="mi">4</span>
+	<span class="k">movem</span><span class="nd">.l	</span><span class="nb">d0</span><span class="o">-</span><span class="mi">7</span><span class="o">/</span><span class="nb">a0</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="nv">coun</span><span class="p">(</span><span class="nb">a6</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>as many times as you need.</p>
+</div>
+<div class="paragraph">
+<p>Finally, I would pre-process the font and the scrolltext. The font would be re-arranged in memory so that I could grab
+a character with a set of <code>movem`s and then `movep`</code> it onto the screen.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all in my tutorial, if you want the details :D</p>
+</div>
+<div class="paragraph">
+<p>Finally, if you fancy a challenge, I found a way to scroll the <strong>entire screen</strong> 8 bits per frame. It&#8217;s also in my
+tutorial, which you already have :)</p>
+</div>
+<div class="paragraph">
+<p>Cheers, and thanks again!</p>
+</div>
+<div class="paragraph">
+<p>James Ingram</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph nav-footer">
@@ -1217,7 +1312,7 @@ remove the bottom and top borders, cool stuff!</p>
 <div id="footer">
 <div id="footer-text">
 Version 1st edition (v0.84)<br>
-Last updated 2022-04-18 16:48:36 UTC
+Last updated 2022-04-23 15:26:12 UTC
 </div>
 </div>
 </body>
