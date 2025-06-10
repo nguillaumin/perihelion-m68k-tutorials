@@ -37,7 +37,7 @@ as much as 2, and one hundred times as much as 3. To calculate the value
 of the expression 123, we really use this formula:
 
 ====
-( 1 × 102 ) + ( 2 × 101 ) + ( 3 × 100 )
+(1 × 10^2^) + (2 × 10^1^) + (3 × 10^0^)
 ====
 
 The generic formula looks like this:
@@ -50,19 +50,15 @@ OK, you say hesitantly, perhaps I understand something of what you're
 trying to say; now what about computers? Computers use base 2, they are
 binary and can only count 1's and 0's. There is either current through a
 circuit, or there isn't. They only use two symbols to express values. As
-you can imagine, the result is very long expressions, like
+you can imagine, the result is very long expressions, like 101010101011101000101010.
 
-1. For presenting the value three, the computer uses the symbols
-2. Using our generic formula above, we translate this to:
+For presenting the value three, the computer uses the symbols `+11+`. Using our generic formula above, we translate this to:
 
 ====
-( 1 × 21 ) + ( 1 × 20 ) = 3
+( 1 × 2^1^ ) + ( 1 × 2^0^ ) = 3
 ====
 
 For expressing the number five, we would get 101:
-
-3 Of Various Things Mystic And Important, Mainly Concerning The Art Of
-Understanding Digits And Performing Traps
 
 ====
 ....
@@ -136,7 +132,7 @@ as explained in tutorial one. Here is a usage example of the data register.
 ----
                 move.w  #10, d0                ; put value 10 into data register zero
                 move.w  #5, d1                 ; put value 5 into data register 1
-                add     d1, d0                 ; adds d1 to d0 and stores value in d
+                add     d1, d0                 ; adds d1 to d0 and stores value in d0
                 ; d0 now holds value 15
 ----
 
